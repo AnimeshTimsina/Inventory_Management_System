@@ -97,10 +97,10 @@
 
 
 <div id="grid">
-{% for name,working,out,maintenance in categoryDetails%}
+{% for name,id,working,out,maintenance in categoryDetails%}
 
 <div class="hoverZoom">
-  <a href="{% url 'details' forloop.counter %}" style="text-decoration:none;">
+  <a href="{% url 'details' id%}" style="text-decoration:none;">
 <h7 style="color:#35495E"><b>{{name}}</b></h7>
 <p class="info">Working: {{working}}</p>
 <p class="info">Out Of Order: {{out}}</p>

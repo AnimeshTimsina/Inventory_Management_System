@@ -19,7 +19,7 @@ def dashboardView(request):
             working_count += obj.working if obj.working!=0 else 0
             in_maintenanace_count += obj.in_maintenance if obj.in_maintenance!=0 else 0
             out_of_order_count += obj.out_of_order if obj.out_of_order!=0 else 0
-        temp = [cat.category_name,working_count,out_of_order_count,in_maintenanace_count]
+        temp = [cat.category_name,cat.id,working_count,out_of_order_count,in_maintenanace_count]
         categoryDetails.append(temp)
         working_count = in_maintenanace_count = out_of_order_count = 0
     context = {'categoryDetails':categoryDetails}
