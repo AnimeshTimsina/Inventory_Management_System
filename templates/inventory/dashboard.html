@@ -39,7 +39,7 @@
 									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
 																	</li>
 								<li class="gn-search-item">
-								<a class="gn-icon gn-icon-search" href="{% url 'search' 999 999 %}">Search</a>
+								<a class="gn-icon gn-icon-search" href="{% url 'advancedSearch'%}">Search</a>
 								</li>
 								<li>
 																	<a class="gn-icon gn-icon-cog" href="{% url 'editcategory'%}">Edit Categories</a>
@@ -51,8 +51,11 @@
 																				<a class="codrops-icon codrops-icon-drop" href="{% url 'createfloor' %}" style="padding-left:15px;">Create Floor</a>
 																			</li>
 																			<li>
-																				<a class="gn-icon gn-icon-download" href="{% url 'register'%}">New User</a>
+																				<a class="codrops-icon codrops-icon-drop" href="{% url 'register'%}" style="padding-left:15px;">New User</a>
 																			</li>
+																			<li>
+																			<a class="gn-icon gn-icon-download" href="{% url 'chooseCategory'%}" >Download CSV </a>
+																		</li>
 							</ul>
 						</div><!-- /gn-scroller -->
 					</nav>

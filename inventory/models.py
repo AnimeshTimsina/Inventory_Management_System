@@ -1,11 +1,17 @@
 # Create your models here.
 
 from django.db import models
-
 import datetime
-
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
+def validate_single_word(value):
+     if (' ' in value) == True:
+        raise ValidationError(
+            _('%(value)s contains space '),
+            params={'value': value},
+        )
 
 # Create your models here.
 
@@ -13,7 +19,7 @@ from django.contrib.postgres.fields import JSONField
 class Categorie(models.Model):
 
     category_name = models.CharField(max_length=50, default='Generic',
-                                     help_text='Enter the category of the item')
+                                     help_text='Enter the category of the item', validators=[validate_single_word])
 
     extra_fields = JSONField(blank=True, null=True)
 
@@ -31,10 +37,10 @@ class Item(models.Model):
                             help_text='Enter the brand name of the item')
 
     model = models.CharField(max_length=50, default='Generic',
-                             help_text='Enter the model of the item')
+                             help_text='Enter the model of the item', blank=True, null=True)
 
     cost_per_item = models.DecimalField(
-        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per item')
+        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per item',blank=True)
 
     room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,
                              help_text='Select room where it is kept')
@@ -72,7 +78,7 @@ class Room(models.Model):
 
     room_no = models.PositiveSmallIntegerField(primary_key=True, help_text='Enter the room number')
 
-    room_name = models.CharField(max_length=20, default='Generic',
+    room_name = models.CharField(max_length=50, default='Generic',
                                  help_text='Enter the name of the room')
 
     floor = models.ForeignKey(
@@ -80,4 +86,5 @@ class Room(models.Model):
 
     def __str__(self):
 
-        return "{}-{}".format(self.room_no, self.room_name)
+        return "{}:{}".format(self.room_no, self.room_name)
+

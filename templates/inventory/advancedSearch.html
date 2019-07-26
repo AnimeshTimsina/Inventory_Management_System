@@ -1,0 +1,172 @@
+{% load static %}
+{%load staticfiles%}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Advanced Search</title>
+        <link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
+        <script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+    	<script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+		<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+       
+
+     <style>
+    body {
+        background-color: #f2f2f2;
+        margin:30px;
+    }
+    .my-row {
+       
+    }
+    .my-col {
+        
+    }
+    .plus-logo {
+        width:20px;
+        height:20px;
+    }
+    tr{
+      font-size:12px;
+      line-height: 20px;
+      
+    }
+    .my-table {
+        margin-top:20px;
+    }
+    .dropdown-toggle::after {
+    display:none;
+    }
+    </style>
+	</head>
+	<body>
+      <div class="container my-container">
+        
+            <form action="{% url 'advancedSearch' %}" method="POST">  
+            {% csrf_token %}
+            <div class="row my-row">     
+                <div class="col-2 my-col">
+            <img src="{% static 'inventory/images/plus.png' %}" class="plus-logo">
+                <label for="floorSelect">Floor</label>
+                    <select id = "floorSelect" name="floorSelect" onchange='if(this.value != null) { this.form.submit(); }'>
+                         <option value = 'All' {% ifequal floorValue All %} selected {% endifequal %}>  All </option>
+                    {% for obj in floorObj%}
+                        <option value = {{obj.floor}} {% ifequal floorValue obj.floor %} selected {% endifequal %}>  {{obj}} </option>
+                    {% endfor%}
+                    </select>
+                </div>
+                <div class="col-4 my-col">
+                <img src="{% static 'inventory/images/plus.png' %}" class="plus-logo">
+                <label for="roomSelect">Room</label>
+                      <select id = "roomSelect" name="roomSelect" onchange='if(this.value != null) { this.form.submit(); }'>
+                         <option value = 'All' {% ifequal roomValue All %} selected {% endifequal %}>  All </option>
+                    {% for obj in roomObj%}
+                        <option value = {{obj.room_no}} {% ifequal roomValue obj.room_no %} selected {% endifequal %}>  {{obj}} </option>
+                    {% endfor%}
+                    </select>
+                </div>
+                <div class="col-3 my-col">
+                <img src="{% static 'inventory/images/plus.png' %}" class="plus-logo">
+                <label for="categorySelect">Category</label>
+                     <select id = "categorySelect" name="categorySelect" onchange='if(this.value != null) { this.form.submit(); }'>
+                    {% for obj in categoryObj%}
+                        <option value = {{obj.category_name}} {% ifequal categoryValue obj.category_name %} selected {% endifequal %}>  {{obj}} </option>
+                    {% endfor%}
+                    </select>
+                </div>
+                <div class="col-4 my-col">
+                    <input type="text" id="searchInput" onkeyup="myFunction1()" placeholder="Search from table.." class="form-control" style="width:50%;height:35px;">
+                </div>
+                  </div>
+              </form>
+      
+
+        <div class="row my-row">
+        <table class="table table-bordered table-striped my-table" id="dataTable" >
+          <thead class="thead-dark">
+           <tr>
+             <th scope="col">Name</th>
+             <th scope="col">Model</th>
+             <th scope="col">Working</th>
+             <th scope="col">Out Of Order</th>
+             <th scope="col">In Maintenance</th>
+             <th scope="col">Room</th>
+             <th scope="col">Cost per item</th>
+             <!-- <th scope="col">Edit</th>
+             <th scope="col">Delete</th> -->
+             {% if category.extra_fields%}
+             {% for key, value in category.extra_fields.items %}
+            <th scope="col"> {{ value }} </th>
+             {% endfor %}
+             {% endif %}
+           </tr>
+          </thead>
+          <tbody>
+          {% for item in itemObj%}
+           <tr>
+             <td>{{item.name}}</td>
+             <td>{{item.model}}</td>
+             <td>{{item.working}}</td>
+             <td>{{item.out_of_order}}</td>
+             <td>{{item.in_maintenance}}</td>
+             <td>{{item.room}}</td>
+             <td>{{item.cost_per_item}}</td>
+             <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+             <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+             {% if item.extra_value%}
+             {% for key, value in item.extra_value.items %}
+            <td> {{value}} </td>
+             {% endfor %}
+             {% endif %}
+             <td>
+               <div class="dropdown show">
+                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+                 </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item padd" href="{% url 'addExisting' item.pk %}">Add</a>
+                            <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+                            <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+                            <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+                        </div>
+             </div>
+               </td>
+
+           </tr>
+           {% endfor %}
+          </tbody>
+          </table>
+        
+        </div>
+        
+
+     </div>
+
+
+    <script>
+    function myFunction1() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase(); 
+  table = document.getElementById("dataTable");
+  tr = table.getElementsByTagName("tr");
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+    </script>
+
+    </body>
+    </html>

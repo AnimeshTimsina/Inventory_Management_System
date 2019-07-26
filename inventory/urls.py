@@ -12,16 +12,18 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='inventory/logout.html'), name='logout'),
     path('addExisting/<int:key>', views.addExisting, name='addExisting'),
     path('allocate/<int:key>', views.allocate, name='allocate'),
-    path('search/<int:floorNumber>/<int:roomNumber>', views.search, name='search'),
-    path('search2/<int:floorNumber>/<int:roomNumber>', views.search2, name='search2'),
-    path('search3/<int:floorNumber>/<int:roomNumber>', views.search3, name='search3'),
+    
     path('delete/<int:key>',views.delete,name='delete'),
     path('edit/<int:key>',views.edit,name='edit'),
     path('editcategory/',views.editcategory,name='editcategory'),
     path('editcategory/<int:key>',views.editcategory2,name='editcategory2'),
     path('createroom/',views.createroom,name='createroom'),
     path('createfloor/',views.createfloor,name='createfloor'),
-    path('details/<int:key>',views.detailsView,name='details'),
+   
+    path('advancedSearch/',views.advancedSearch,name='advancedSearch'),
+    path('downloadCSV/<int:key>',views.downloadCSV,name='downloadCSV'),
+    path('downloadCSVComplete/',views.downloadCSVComplete,name='downloadCSVComplete'),
+    path('chooseCategory/',views.chooseCategory,name='chooseCategory'),
 
 
 ]

@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+import csv
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Categorie, Item, Floor, Room
 from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm
 from django.contrib.auth.forms import UserCreationForm
@@ -6,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 @login_required
@@ -162,45 +164,7 @@ def allocate(request, key):
     context.update(dict)
     return render(request, 'inventory/allocate.html', context)
 
-@login_required
-def search(request, floorNumber, roomNumber):
-    item = Item.objects.none()
-    dict = {}
-    floor = Floor.objects.order_by('floor')
-    if (floorNumber == 999):  # all floors
-        room = Room.objects.all()
-    else:
-        floorObj = Floor.objects.get(pk=floorNumber)
-        # when any floor number is clicked, filter all rooms from that floor
-        room = Room.objects.filter(floor=floorObj)
-    if(roomNumber == 999 and floorNumber == 999):  # all floors and all rooms
-        item |= Item.objects.all()
-    elif (roomNumber == 999 and floorNumber != 999):  # when any floorNo is clicked but roomNo is not clicked
-        for roomObj in room:
-            # append all the items from all the rooms that belong to that floor (filtered on line 124 and 125)
-            item |= Item.objects.filter(room=roomObj)
-    else:
-        roomObj = Room.objects.get(pk=roomNumber)  # when a particular room number is clicked
-        floorObj = roomObj.floor  # get the floor number of the clicked room number
-        # rooms must be displayed that is located on floor of the clicked room
-        room = Room.objects.filter(floor=floorObj)
-        item |= Item.objects.filter(room=roomObj)  # items belonging to the clicked room
-    categories = Categorie.objects.all()  # all categories are displayed
-    count = 0
-    itemno = [a for a in range(100)]  # temporary 100 values for array definition
-    print(count)
-    for categoryno in categories:
-        # itemno[0] = items of 1st category, and so on(filter for already filtered item)
-        itemno[count] = item.filter(category=categoryno)
-        count += 1  # counts the total number of categories
-    for i in range(count):
-        # {item0:itemno[0],item1:itemno[1],item2:itemno[2]}....and so on
-        dict.update({"item"+str(i): itemno[i]})
-    room.order_by('room_no')
-    context = {'floor': floor, 'room': room, 'categories': categories, 'count': count}
-    # {%for item in item0%} represents filterd item list of 1st category and so on upto count number of categories in template
-    context.update(dict)
-    return render(request, 'inventory/search.html', context)
+
 
 @login_required
 def delete(request,key):
@@ -303,88 +267,117 @@ def createfloor(request):
     context = {'createFloorform': createFloorform}
     return render(request,'inventory/createfloor.html',context)
 
-@login_required
-def search2(request, floorNumber, roomNumber):
-    item = Item.objects.none()
-    dict = {}
-    floor = Floor.objects.order_by('floor')
-    if (floorNumber == 999):  # all floors
-        room = Room.objects.all()
+
+
+
+
+def advancedSearch(request):
+    if not Categorie.objects.all().exists():
+        return HttpResponse('There is no data in the inventory')
+    if request.method == 'POST':
+        floorValue = request.POST['floorSelect']
+        roomValue = request.POST['roomSelect']
+        categoryValue = request.POST['categorySelect']
     else:
-        floorObj = Floor.objects.get(pk=floorNumber)
-        # when any floor number is clicked, filter all rooms from that floor
-        room = Room.objects.filter(floor=floorObj)
-    if(roomNumber == 999 and floorNumber == 999):  # all floors and all rooms
-        item |= Item.objects.filter(out_of_order__gt=0)
-    elif (roomNumber == 999 and floorNumber != 999):  # when any floorNo is clicked but roomNo is not clicked
-        for roomObj in room:
-            # append all the items from all the rooms that belong to that floor (filtered on line 124 and 125)
-            item |= Item.objects.filter(room=roomObj).filter(out_of_order__gt=0)
+        floorValue = 'All'
+        roomValue = 'All'
+        categoryValue = 'All'
+        categoryValue = Categorie.objects.all()[0].category_name
+    print(categoryValue)
+    categoryObj = Categorie.objects.all()       #dropdown list for category section
+    floorObj = Floor.objects.all()
+    if (floorValue == 'All'):
+        roomObj = Room.objects.all()
     else:
-        roomObj = Room.objects.get(pk=roomNumber)  # when a particular room number is clicked
-        floorObj = roomObj.floor  # get the floor number of the clicked room number
-        # rooms must be displayed that is located on floor of the clicked room
-        room = Room.objects.filter(floor=floorObj)
-        item |= Item.objects.filter(room=roomObj).filter(out_of_order__gt=0)  # items belonging to the clicked room
-    categories = Categorie.objects.all()  # all categories are displayed
-    count = 0
-    itemno = [a for a in range(100)]  # temporary 100 values for array definition
-    print(count)
-    for categoryno in categories:
-        # itemno[0] = items of 1st category, and so on(filter for already filtered item)
-        itemno[count] = item.filter(category=categoryno)
-        count += 1  # counts the total number of categories
-    for i in range(count):
-        # {item0:itemno[0],item1:itemno[1],item2:itemno[2]}....and so on
-        dict.update({"item"+str(i): itemno[i]})
-    room.order_by('room_no')
-    context = {'floor': floor, 'room': room, 'categories': categories, 'count': count}
-    # {%for item in item0%} represents filterd item list of 1st category and so on upto count number of categories in template
-    context.update(dict)
-    return render(request, 'inventory/search2.html', context)
+        roomObj = Room.objects.filter(floor = floorValue)
+        
+    if (roomValue != 'All'):
+        # roomNumber = roomValue.split(':')
+        # print(roomValue)
+        tempRoomObj = Room.objects.get(room_no = int(roomValue))
+        # print(floorValue)
+  
+        if (floorValue!='All') and (int(tempRoomObj.floor.floor) != int(floorValue)):
+           roomValue = 'All'
+  
+    category = Categorie.objects.get(category_name = str(categoryValue))
+   
+    itemObj = Item.objects.filter(category = category)
+    
+    if (roomValue == 'All'):
+        itemTempObj = itemObj
+        count=0
+        if (not roomObj):
+            itemObj = []
+        for instance in roomObj:
+            if count == 0:
+                itemObj = itemTempObj.filter(room = instance)
+               
+            else:
+                itemObj |= itemTempObj.filter(room = instance)
+            count = count+1
+    else:
+        itemObj = itemObj.filter(room = roomValue)
+    if (roomValue!='All'):
+        roomValue = int(roomValue)
+    if (floorValue!='All'):
+        floorValue = int(floorValue)
+    args = {'roomObj':roomObj, 'categoryObj':categoryObj, 'floorObj':floorObj, 'itemObj':itemObj,'floorValue':floorValue, 'roomValue':roomValue, 'categoryValue':categoryValue,'category':category}
+    return render(request,'inventory/advancedSearch.html',args)
 
 @login_required
-def search3(request, floorNumber, roomNumber):
-    item = Item.objects.none()
-    dict = {}
-    floor = Floor.objects.order_by('floor')
-    if (floorNumber == 999):  # all floors
-        room = Room.objects.all()
-    else:
-        floorObj = Floor.objects.get(pk=floorNumber)
-        # when any floor number is clicked, filter all rooms from that floor
-        room = Room.objects.filter(floor=floorObj)
-    if(roomNumber == 999 and floorNumber == 999):  # all floors and all rooms
-        item |= Item.objects.filter(in_maintenance__gt=0)
-    elif (roomNumber == 999 and floorNumber != 999):  # when any floorNo is clicked but roomNo is not clicked
-        for roomObj in room:
-            # append all the items from all the rooms that belong to that floor (filtered on line 124 and 125)
-            item |= Item.objects.filter(room=roomObj).filter(in_maintenance__gt=0)
-    else:
-        roomObj = Room.objects.get(pk=roomNumber)  # when a particular room number is clicked
-        floorObj = roomObj.floor  # get the floor number of the clicked room number
-        # rooms must be displayed that is located on floor of the clicked room
-        room = Room.objects.filter(floor=floorObj)
-        item |= Item.objects.filter(room=roomObj).filter(in_maintenance__gt=0)  # items belonging to the clicked room
-    categories = Categorie.objects.all()  # all categories are displayed
-    count = 0
-    itemno = [a for a in range(100)]  # temporary 100 values for array definition
-    print(count)
-    for categoryno in categories:
-        # itemno[0] = items of 1st category, and so on(filter for already filtered item)
-        itemno[count] = item.filter(category=categoryno)
-        count += 1  # counts the total number of categories
-    for i in range(count):
-        # {item0:itemno[0],item1:itemno[1],item2:itemno[2]}....and so on
-        dict.update({"item"+str(i): itemno[i]})
-    room.order_by('room_no')
-    context = {'floor': floor, 'room': room, 'categories': categories, 'count': count}
-    # {%for item in item0%} represents filterd item list of 1st category and so on upto count number of categories in template
-    context.update(dict)
-    return render(request, 'inventory/search3.html', context)
+def downloadCSV(request,key):
+    obj = Categorie.objects.get(pk=key)
+    itemsObj = Item.objects.filter(category = obj)
+    response = HttpResponse(content_type='text/csv')
+    response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
+    writer = csv.writer(response)
+    listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'In Maintenance', 'Out of order', 'Created', 'Last Modified']
+  
+    if (obj.extra_fields):
+        for key,value in obj.extra_fields.items():
+            listOfFields.append(value)
+    writer.writerow(listOfFields)
 
-def detailsView(request,key):
-    categoryObj = Categorie.objects.get(pk=key)
-    itemObj = Item.objects.filter(category = categoryObj)
-    context = {'itemObj':itemObj,'categoryObj':categoryObj}
-    return render(request,'inventory/details.html',context)
+    for obj in itemsObj:
+        valueField = [obj.name,obj.model,obj.cost_per_item,obj.room,obj.date_of_acquire,obj.working,obj.in_maintenance,obj.out_of_order,obj.created,obj.last_modified]
+        if (obj.extra_value):
+            for key,value in obj.extra_value.items():
+                valueField.append(value)
+        writer.writerow(valueField)
+    
+    return response
+    
+@login_required
+def chooseCategory(request):
+    return render(request,'inventory/chooseCategory.html',{'categoryObj':Categorie.objects.all()})
+
+
+@login_required
+def downloadCSVComplete(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
+    writer = csv.writer(response)
+   
+    for instance in Categorie.objects.all():
+        itemsObj = Item.objects.filter(category = instance)
+        listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'In Maintenance', 'Out of order', 'Created', 'Last Modified']
+        if (instance.extra_fields):
+            for key,value in instance.extra_fields.items():
+                listOfFields.append(value)
+        writer.writerow(listOfFields)
+        for obj in itemsObj:
+            valueField = [obj.name,obj.model,obj.cost_per_item,obj.room,obj.date_of_acquire,obj.working,obj.in_maintenance,obj.out_of_order,obj.created,obj.last_modified]
+            if (obj.extra_value):
+                for key,value in obj.extra_value.items():
+                    valueField.append(value)
+            writer.writerow(valueField)
+        writer.writerow([])
+        writer.writerow([])
+        
+    
+    return response
+    
+@login_required
+def chooseCategory(request):
+    return render(request,'inventory/chooseCategory.html',{'categoryObj':Categorie.objects.all()})

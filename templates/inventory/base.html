@@ -47,12 +47,17 @@
   .hello{
     padding:0px 30px 0px 30px;
   }
+  .header {
+    
+    font-size:20px;
+    font-family: "Lato", Arial, sans-serif;
+  }
   </style>
 
   <div class="col1">
     <div class="row2">
-      <h1 class="text-white" style="font-weight:bold;font-size:40px;">Inventory Management for ICTC and Department</h1>
-      <h2 class="text-white"> Pulchowk Campus, Lalitpur </h2>
+      <h1 class="text-white header">Inventory</h1>
+      
     </div>
     <!-- <br />
     <br />
@@ -68,39 +73,13 @@
       </p>
     </div>
   <span class="row1">
-  <!-- <a href="{% url 'search' 999 999%}" style="text-decoration:none;">
-    <div class="card hoverZoom bg-info text-white" style="width:270px;height:150px;">
-  <div class="card-body">
-    <h4 class="card-title">Total Items</h4>
-    <p class="card-text">{%total_products_count%}</p>
-
-  </div>
-</div></a>
-<a href="{% url 'search2' 999 999%}" style="text-decoration:none;">
-<div class="card hoverZoom bg-danger text-white" style="width:270px;height:150px;">
- <div class="card-body">
-  <h4 class="card-title">Out Of Order Items</h4>
-  <p class="card-text">{%out_of_order_count%}</p>
-
-</div>
-</div>
-</a>
-<a href="{% url 'search3' 999 999%}" style="text-decoration:none;" >
-<div class="card hoverZoom bg-secondary text-white" style="width:270px;height:150px">
- <div class="card-body">
-  <h4 class="card-title">In Maintenance Items</h4>
-  <p class="card-text">{%in_maintenance_count%}</p>
-
-</div>
-</div>
-</a> -->
 
 
 <div id="grid">
 {% for name,id,working,out,maintenance in categoryDetails%}
 
 <div class="hoverZoom">
-  <a href="{% url 'details' id%}" style="text-decoration:none;">
+  <a style="text-decoration:none;">
 <h7 style="color:#35495E"><b>{{name}}</b></h7>
 <p class="info">Working: {{working}}</p>
 <p class="info">Out Of Order: {{out}}</p>
