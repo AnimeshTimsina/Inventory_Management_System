@@ -1,8 +1,8 @@
 from django import template
-
+from django.utils.html import mark_safe
 register = template.Library()
 
-from ..models import Item
+from ..models import Item,Categorie,Room
 
 
 # @register.simple_tag
@@ -24,6 +24,49 @@ from ..models import Item
 # @register.simple_tag
 # def equipment5_name():
 #     return equipment[4].__name__
+
+
+@register.simple_tag
+def categoryList():
+    list = []
+    categories = Categorie.objects.all()
+    for c in categories:
+        list.append(c.category_name)
+    return mark_safe(list)
+
+@register.simple_tag
+def roomList():
+    list = []
+    rooms = Room.objects.all()
+    for r in rooms:
+        list.append(r.room_name)
+    
+    return mark_safe(list)
+
+@register.simple_tag
+def itemNumberBasedOnCategory():
+    list = []
+    categories = Categorie.objects.all()
+    for c in categories:
+       items = Item.objects.filter(category = c)
+       count = 0
+       for i in items:
+           count = count + i.working + i.out_of_order + i.in_maintenance
+       list.append(count)
+    return list
+
+@register.simple_tag
+def itemNumberBasedOnRoom():
+    list = []
+    rooms = Room.objects.all()
+    for r in rooms:
+        items = Item.objects.filter(room = r)
+        count = 0
+        for i in items:
+            count = count + i.working + i.out_of_order + i.in_maintenance
+        list.append(count)
+    return list
+
 
 
 @register.simple_tag
