@@ -1,0 +1,1658 @@
+[
+    {
+        "model": "inventory.item",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "name": "Hampden toolbox",
+            "model": null,
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:33:53.957Z",
+            "last_modified": "2019-07-26T01:33:53.957Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 2,
+        "fields": {
+            "category": 1,
+            "name": "Steel Cabinet",
+            "model": null,
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 9,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:34:18.443Z",
+            "last_modified": "2019-07-26T01:34:18.443Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 3,
+        "fields": {
+            "category": 1,
+            "name": "Lab Table",
+            "model": null,
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 8,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:34:37.994Z",
+            "last_modified": "2019-07-26T01:34:37.994Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 4,
+        "fields": {
+            "category": 1,
+            "name": "Office Table",
+            "model": null,
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:34:56.198Z",
+            "last_modified": "2019-07-26T01:34:56.198Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 5,
+        "fields": {
+            "category": 1,
+            "name": "Hameg Analogue Oscilloscope 60MHz",
+            "model": "HM605",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 7,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:39:08.572Z",
+            "last_modified": "2019-07-26T01:39:08.572Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 6,
+        "fields": {
+            "category": 1,
+            "name": "AVOMETER 8",
+            "model": "Generic",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 11,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:39:42.669Z",
+            "last_modified": "2019-07-26T01:39:42.669Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 7,
+        "fields": {
+            "category": 1,
+            "name": "Sympson multimeter 260",
+            "model": null,
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 11,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:40:15.618Z",
+            "last_modified": "2019-07-26T01:40:15.618Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 8,
+        "fields": {
+            "category": 1,
+            "name": "Universal Counter",
+            "model": "5315A",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:40:56.412Z",
+            "last_modified": "2019-07-26T01:40:56.412Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 9,
+        "fields": {
+            "category": 1,
+            "name": "Decade Capacitance Box",
+            "model": "IET HACS-Z Series",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:43:30.185Z",
+            "last_modified": "2019-07-26T01:43:30.186Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 10,
+        "fields": {
+            "category": 1,
+            "name": "Decade Resistance box X 5 upto 1 MOhm",
+            "model": "IFT",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.250Z",
+            "last_modified": "2019-07-26T01:57:14.250Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 11,
+        "fields": {
+            "category": 1,
+            "name": "Decade Resistance box x 4 upto 100Ohm",
+            "model": "IFT",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.256Z",
+            "last_modified": "2019-07-26T01:57:14.256Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 12,
+        "fields": {
+            "category": 1,
+            "name": "CA 401 AMP Meter",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 7,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.261Z",
+            "last_modified": "2019-07-26T01:57:14.262Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 13,
+        "fields": {
+            "category": 1,
+            "name": "Protek A432 Multimeter",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 9,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.267Z",
+            "last_modified": "2019-07-26T01:57:14.267Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 14,
+        "fields": {
+            "category": 1,
+            "name": "Escoro Single Source 0: 30V Power Supply",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.270Z",
+            "last_modified": "2019-07-26T01:57:14.270Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 15,
+        "fields": {
+            "category": 1,
+            "name": "Autonix Power Supply",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.274Z",
+            "last_modified": "2019-07-26T01:57:14.274Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 16,
+        "fields": {
+            "category": 1,
+            "name": "Function Generator 5132 Philips",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.277Z",
+            "last_modified": "2019-07-26T01:57:14.277Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 17,
+        "fields": {
+            "category": 1,
+            "name": "Protoboard",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 11,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.280Z",
+            "last_modified": "2019-07-26T01:57:14.280Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 18,
+        "fields": {
+            "category": 1,
+            "name": "Pulse Generator Philips",
+            "model": "PM5705",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.283Z",
+            "last_modified": "2019-07-26T01:57:14.283Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 19,
+        "fields": {
+            "category": 1,
+            "name": "HP Digital Multimeter",
+            "model": "34401A",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.286Z",
+            "last_modified": "2019-07-26T01:57:14.286Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 20,
+        "fields": {
+            "category": 1,
+            "name": "Fluke/Philips RLC",
+            "model": "PM6303A",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.289Z",
+            "last_modified": "2019-07-26T01:57:14.289Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 21,
+        "fields": {
+            "category": 1,
+            "name": "Oscilloscope Hameg 30MHz",
+            "model": "HM303-3",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 2,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.292Z",
+            "last_modified": "2019-07-26T01:57:14.292Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 22,
+        "fields": {
+            "category": 1,
+            "name": "BK Precision Circuit Analyser",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 2,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.296Z",
+            "last_modified": "2019-07-26T01:57:14.296Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 23,
+        "fields": {
+            "category": 1,
+            "name": "Curve Tracer",
+            "model": "HM 8042",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 2,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.299Z",
+            "last_modified": "2019-07-26T01:57:14.299Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 24,
+        "fields": {
+            "category": 1,
+            "name": "Dual Output Power Supply M.N",
+            "model": "TW-5050D",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.303Z",
+            "last_modified": "2019-07-26T01:57:14.303Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 25,
+        "fields": {
+            "category": 1,
+            "name": "Computer set NEC",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.306Z",
+            "last_modified": "2019-07-26T01:57:14.306Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 26,
+        "fields": {
+            "category": 1,
+            "name": "Hitachi Multimedia Projector",
+            "model": "",
+            "cost_per_item": null,
+            "room": 1,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T01:57:14.309Z",
+            "last_modified": "2019-07-26T01:57:14.309Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 27,
+        "fields": {
+            "category": 1,
+            "name": "Belmerit MT 100 all in one",
+            "model": "MT-100",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.509Z",
+            "last_modified": "2019-07-26T03:29:19.509Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 28,
+        "fields": {
+            "category": 1,
+            "name": "Discrete Component Kit",
+            "model": "Tesca-36185",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 4,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.519Z",
+            "last_modified": "2019-07-26T03:29:19.519Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 29,
+        "fields": {
+            "category": 1,
+            "name": "OP amp Kit- local made",
+            "model": "",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.523Z",
+            "last_modified": "2019-07-26T03:29:19.523Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 30,
+        "fields": {
+            "category": 1,
+            "name": "Digital Electronics Trainer Kit",
+            "model": "LTB-825",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.527Z",
+            "last_modified": "2019-07-26T03:29:19.527Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 31,
+        "fields": {
+            "category": 1,
+            "name": "HP Oscilloscope 100 MHz",
+            "model": "54600 B",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.530Z",
+            "last_modified": "2019-07-26T03:29:19.530Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 32,
+        "fields": {
+            "category": 1,
+            "name": "Proto Tool Box",
+            "model": "",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.533Z",
+            "last_modified": "2019-07-26T03:29:19.533Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 33,
+        "fields": {
+            "category": 1,
+            "name": "Experiment Table",
+            "model": "",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.537Z",
+            "last_modified": "2019-07-26T03:29:19.537Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 34,
+        "fields": {
+            "category": 1,
+            "name": "Office Table",
+            "model": "wooden",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.540Z",
+            "last_modified": "2019-07-26T03:29:19.540Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 35,
+        "fields": {
+            "category": 1,
+            "name": "Cupboard common",
+            "model": "Steel",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.543Z",
+            "last_modified": "2019-07-26T03:29:19.543Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 36,
+        "fields": {
+            "category": 1,
+            "name": "Student Bag case",
+            "model": "Steel",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.546Z",
+            "last_modified": "2019-07-26T03:29:19.546Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 37,
+        "fields": {
+            "category": 1,
+            "name": "Telephone internal",
+            "model": "Alcatel",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.549Z",
+            "last_modified": "2019-07-26T03:29:19.549Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 38,
+        "fields": {
+            "category": 1,
+            "name": "Star Plus Battery 150Ah",
+            "model": "",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 4,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.551Z",
+            "last_modified": "2019-07-26T03:29:19.551Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 39,
+        "fields": {
+            "category": 1,
+            "name": "Inverter D Sine 03K5",
+            "model": "",
+            "cost_per_item": null,
+            "room": 4,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T03:29:19.555Z",
+            "last_modified": "2019-07-26T03:29:19.555Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 40,
+        "fields": {
+            "category": 1,
+            "name": "Student Bag case",
+            "model": "steel",
+            "cost_per_item": null,
+            "room": 7,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 1,
+            "created": "2019-07-26T03:41:04.414Z",
+            "last_modified": "2019-07-26T03:41:04.414Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 41,
+        "fields": {
+            "category": 1,
+            "name": "Experiment Table",
+            "model": "wooden",
+            "cost_per_item": null,
+            "room": 7,
+            "date_of_acquire": "2019-07-26",
+            "working": 12,
+            "in_maintenance": 0,
+            "out_of_order": 12,
+            "created": "2019-07-26T03:41:04.422Z",
+            "last_modified": "2019-07-26T03:41:04.422Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 42,
+        "fields": {
+            "category": 1,
+            "name": "Stool",
+            "model": "",
+            "cost_per_item": null,
+            "room": 7,
+            "date_of_acquire": "2019-07-26",
+            "working": 24,
+            "in_maintenance": 0,
+            "out_of_order": 24,
+            "created": "2019-07-26T03:41:04.427Z",
+            "last_modified": "2019-07-26T03:41:04.427Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 43,
+        "fields": {
+            "category": 1,
+            "name": "Cupboard Common",
+            "model": "steel",
+            "cost_per_item": null,
+            "room": 7,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 1,
+            "created": "2019-07-26T03:41:04.430Z",
+            "last_modified": "2019-07-26T03:41:04.430Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 44,
+        "fields": {
+            "category": 1,
+            "name": "Projector Screen",
+            "model": "",
+            "cost_per_item": null,
+            "room": 7,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 1,
+            "created": "2019-07-26T03:41:04.433Z",
+            "last_modified": "2019-07-26T03:41:04.433Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 45,
+        "fields": {
+            "category": 1,
+            "name": "NEC CPU",
+            "model": "MG33LBZEEDVFSBZ",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 24,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.613Z",
+            "last_modified": "2019-07-26T04:12:19.613Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 46,
+        "fields": {
+            "category": 1,
+            "name": "NEC Monitor",
+            "model": "L190NU",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 24,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.619Z",
+            "last_modified": "2019-07-26T04:12:19.619Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 47,
+        "fields": {
+            "category": 1,
+            "name": "Office Chair",
+            "model": "",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.623Z",
+            "last_modified": "2019-07-26T04:12:19.623Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 48,
+        "fields": {
+            "category": 1,
+            "name": "Table",
+            "model": "",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 23,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.627Z",
+            "last_modified": "2019-07-26T04:12:19.627Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 49,
+        "fields": {
+            "category": 1,
+            "name": "Stool",
+            "model": "",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 25,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.671Z",
+            "last_modified": "2019-07-26T04:12:19.671Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 50,
+        "fields": {
+            "category": 1,
+            "name": "White Board",
+            "model": "",
+            "cost_per_item": null,
+            "room": 6,
+            "date_of_acquire": "2019-07-26",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T04:12:19.675Z",
+            "last_modified": "2019-07-26T04:12:19.675Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 62,
+        "fields": {
+            "category": 3,
+            "name": "Analog Communication Trainer Kit",
+            "model": "ED 2960",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-26",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-26T10:08:01.286Z",
+            "last_modified": "2019-07-26T10:08:01.335Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 72,
+        "fields": {
+            "category": 1,
+            "name": "Answering Machine",
+            "model": "Panasonic KX-T1000",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.231Z",
+            "last_modified": "2019-07-28T08:09:56.231Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 73,
+        "fields": {
+            "category": 1,
+            "name": "Telephone Set",
+            "model": "FeTAp 792-1",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 2,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.283Z",
+            "last_modified": "2019-07-28T08:09:56.283Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 74,
+        "fields": {
+            "category": 1,
+            "name": "Air Cooler",
+            "model": "Daikin",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.290Z",
+            "last_modified": "2019-07-28T08:09:56.290Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 75,
+        "fields": {
+            "category": 1,
+            "name": "Steel Cabinet",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 11,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.295Z",
+            "last_modified": "2019-07-28T08:09:56.295Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 76,
+        "fields": {
+            "category": 1,
+            "name": "Tool Box",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.301Z",
+            "last_modified": "2019-07-28T08:09:56.301Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 77,
+        "fields": {
+            "category": 1,
+            "name": "Power Supply Module",
+            "model": "ED 2900",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.306Z",
+            "last_modified": "2019-07-28T08:09:56.306Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 78,
+        "fields": {
+            "category": 1,
+            "name": "Hewlett Packard Oscilloscope(100MHz)",
+            "model": "HP 54600B",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 5,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.310Z",
+            "last_modified": "2019-07-28T08:09:56.310Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 79,
+        "fields": {
+            "category": 1,
+            "name": "Bel-Merit-All in One Instrument",
+            "model": "MT-100",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 5,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.314Z",
+            "last_modified": "2019-07-28T08:09:56.314Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 80,
+        "fields": {
+            "category": 1,
+            "name": "Function Generator",
+            "model": "TCE 7708",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 5,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.321Z",
+            "last_modified": "2019-07-28T08:09:56.321Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 81,
+        "fields": {
+            "category": 1,
+            "name": "Project Board with Power Supply",
+            "model": "Breadboards",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.327Z",
+            "last_modified": "2019-07-28T08:09:56.327Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 82,
+        "fields": {
+            "category": 1,
+            "name": "Audio Generator",
+            "model": "LEADER LAG 26",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 4,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.332Z",
+            "last_modified": "2019-07-28T08:09:56.332Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 83,
+        "fields": {
+            "category": 1,
+            "name": "Sweep Function Generator(10MHz)",
+            "model": "BK Precision 4017",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.336Z",
+            "last_modified": "2019-07-28T08:09:56.336Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 84,
+        "fields": {
+            "category": 1,
+            "name": "RT Signal Generator",
+            "model": "BK Precision 2005A",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.343Z",
+            "last_modified": "2019-07-28T08:09:56.343Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 85,
+        "fields": {
+            "category": 1,
+            "name": "EMI Test Receiver",
+            "model": "Rhode & Swartz ESHS 10",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.347Z",
+            "last_modified": "2019-07-28T08:09:56.347Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 86,
+        "fields": {
+            "category": 1,
+            "name": "Loop Antenna(Rhode & Schwarz)",
+            "model": "HFH2-Z2-335.171132",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.351Z",
+            "last_modified": "2019-07-28T08:09:56.351Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 87,
+        "fields": {
+            "category": 1,
+            "name": "Tripod for Loop Antenna(Rhode & Schwarz)",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.355Z",
+            "last_modified": "2019-07-28T08:09:56.355Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 88,
+        "fields": {
+            "category": 1,
+            "name": "Microwave Trainer Kit",
+            "model": "ED 3000",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.359Z",
+            "last_modified": "2019-07-28T08:09:56.359Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 89,
+        "fields": {
+            "category": 1,
+            "name": "SWR Meter",
+            "model": "SWR 3002",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.363Z",
+            "last_modified": "2019-07-28T08:09:56.363Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 90,
+        "fields": {
+            "category": 1,
+            "name": "Universal Counter",
+            "model": "BK PRECESSION 1823",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.367Z",
+            "last_modified": "2019-07-28T08:09:56.367Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 91,
+        "fields": {
+            "category": 1,
+            "name": "Spectrum Analyzer",
+            "model": "Protek-P 7802",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.371Z",
+            "last_modified": "2019-07-28T08:09:56.371Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 92,
+        "fields": {
+            "category": 1,
+            "name": "True RMS Multimeter",
+            "model": "BK precisson 2833",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.374Z",
+            "last_modified": "2019-07-28T08:09:56.374Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 93,
+        "fields": {
+            "category": 1,
+            "name": "25 MHz Dual Trace Oscilloscope",
+            "model": "Bel Merit 3304",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.379Z",
+            "last_modified": "2019-07-28T08:09:56.379Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 94,
+        "fields": {
+            "category": 1,
+            "name": "Trainer Antenna Kit",
+            "model": "E15 D",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 4,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:09:56.385Z",
+            "last_modified": "2019-07-28T08:09:56.385Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 95,
+        "fields": {
+            "category": 1,
+            "name": "Advance Antenna Unit",
+            "model": "E15L",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.487Z",
+            "last_modified": "2019-07-28T08:19:21.487Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 96,
+        "fields": {
+            "category": 1,
+            "name": "Fiber Optic Trainer Receiver",
+            "model": "E15T",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.493Z",
+            "last_modified": "2019-07-28T08:19:21.493Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 97,
+        "fields": {
+            "category": 1,
+            "name": "Fiber Optic Trainer transmitter",
+            "model": "E15T",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.496Z",
+            "last_modified": "2019-07-28T08:19:21.496Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 98,
+        "fields": {
+            "category": 1,
+            "name": "Digital Multimeter",
+            "model": "Keithley 195A",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.500Z",
+            "last_modified": "2019-07-28T08:19:21.500Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 99,
+        "fields": {
+            "category": 1,
+            "name": "Temperature Controlled Chamber",
+            "model": "Tenney",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.502Z",
+            "last_modified": "2019-07-28T08:19:21.503Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 100,
+        "fields": {
+            "category": 1,
+            "name": "Projector Screen",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.506Z",
+            "last_modified": "2019-07-28T08:19:21.506Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 101,
+        "fields": {
+            "category": 1,
+            "name": "HF Power Meter",
+            "model": "PM3001",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.508Z",
+            "last_modified": "2019-07-28T08:19:21.508Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 102,
+        "fields": {
+            "category": 1,
+            "name": "Vernier Calliper",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.511Z",
+            "last_modified": "2019-07-28T08:19:21.511Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 103,
+        "fields": {
+            "category": 1,
+            "name": "Experiment Lab Table",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 8,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.514Z",
+            "last_modified": "2019-07-28T08:19:21.514Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 104,
+        "fields": {
+            "category": 1,
+            "name": "Stool",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 24,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.517Z",
+            "last_modified": "2019-07-28T08:19:21.518Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 105,
+        "fields": {
+            "category": 1,
+            "name": "Officer Table",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 2,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.520Z",
+            "last_modified": "2019-07-28T08:19:21.520Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 106,
+        "fields": {
+            "category": 1,
+            "name": "Office Chair",
+            "model": "",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.523Z",
+            "last_modified": "2019-07-28T08:19:21.523Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 107,
+        "fields": {
+            "category": 1,
+            "name": "Table Lamp Set",
+            "model": "Naska Leris",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 8,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.527Z",
+            "last_modified": "2019-07-28T08:19:21.527Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 108,
+        "fields": {
+            "category": 1,
+            "name": "Telephone Set",
+            "model": "Mitel Sunerset 410",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 3,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.530Z",
+            "last_modified": "2019-07-28T08:19:21.530Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 109,
+        "fields": {
+            "category": 1,
+            "name": "Telephone Set",
+            "model": "Premier 2500",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 7,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:19:21.533Z",
+            "last_modified": "2019-07-28T08:19:21.533Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 110,
+        "fields": {
+            "category": 3,
+            "name": "Telephone Exchange Trainer Kit",
+            "model": "TPS 7.1.7 Keybold Telephone Technology",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:21:21.870Z",
+            "last_modified": "2019-07-28T08:21:21.870Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 111,
+        "fields": {
+            "category": 3,
+            "name": "Digital Communication Trainer Kit",
+            "model": "ED 2970",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:22:08.054Z",
+            "last_modified": "2019-07-28T08:22:46.126Z",
+            "extra_value": {}
+        }
+    },
+    {
+        "model": "inventory.item",
+        "pk": 112,
+        "fields": {
+            "category": 3,
+            "name": "Analog Communication Trainer Kit",
+            "model": "ED 2950",
+            "cost_per_item": null,
+            "room": 3,
+            "date_of_acquire": "2019-07-28",
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0,
+            "created": "2019-07-28T08:22:34.322Z",
+            "last_modified": "2019-07-28T08:22:34.322Z",
+            "extra_value": {}
+        }
+    }
+]

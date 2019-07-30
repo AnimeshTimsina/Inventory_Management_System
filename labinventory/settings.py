@@ -82,17 +82,27 @@ WSGI_APPLICATION = 'labinventory.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'labinventory',
+#         'USER': 'animesh',
+#         'PASSWORD': 'password1234',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'labinventory',
+        'NAME': 'inventorysystem',
         'USER': 'animesh',
-        'PASSWORD': 'password1234',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -134,4 +144,5 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'dashboard/'
+LOGIN_REDIRECT_URL = 'home/'
+LOGOUT_REDIRECT_URL = '/'

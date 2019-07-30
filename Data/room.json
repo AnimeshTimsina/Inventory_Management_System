@@ -1,0 +1,83 @@
+[
+    {
+        "model": "inventory.room",
+        "pk": 1,
+        "fields": {
+            "room_no":1,
+            "room_name": "Basic Lab -1",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 2,
+        "fields": {
+            "room_no":2,
+            "room_name": "Advance Computer Lab",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 3,
+        "fields": {
+            "room_no":3,
+            "room_name": "Electronic and Communication Lab",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 4,
+        "fields": {
+            "room_no":4,
+            "room_name": "Basic Lab -2",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 5,
+        "fields": {
+            "room_no":5,
+            "room_name": "Project Lab",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 6,
+        "fields": {
+            "room_no":6,
+            "room_name": "DBMS Lab",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 7,
+        "fields": {
+            "room_no":7,
+            "room_name": "General Computer Lab",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 69,
+        "fields": {
+            "room_no":8,
+            "room_name": "Fake Room",
+            "floor": 1
+        }
+    },
+    {
+        "model": "inventory.room",
+        "pk": 78,
+        "fields": {
+            "room_no":9,
+            "room_name": "Fake Room 2",
+            "floor": 1
+        }
+    }
+]

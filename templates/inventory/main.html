@@ -1,0 +1,69 @@
+{% load static %}
+{%load staticfiles%}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Inventory</title>
+        <link href="{% static 'inventory/css/nav.css'%}" rel="stylesheet">
+        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ 
+    <script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+    
+		
+        </head>
+        <body>
+<div id="wrapper" class="active">  
+    <!-- Sidebar -->
+            <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul id="sidebar_menu" class="sidebar-nav">
+           <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
+        </ul>
+        <ul class="sidebar-nav" id="sidebar">
+          <li><a href="{% url 'home'%}">Dashboard<span class="sub_icon glyphicon glyphicon-home"></span></a></li>
+           <ul class="sidebar-nav" id="sidebar">
+                <li><a href="{% url 'advancedSearch'%}">Search<span class="sub_icon glyphicon glyphicon-search"></span></a></li>
+                <li><a href="{% url 'settings'%}">Settings<span class="sub_icon glyphicon glyphicon-cog"></span></a></li>
+           </ul>
+          <li><a href="{% url 'chooseCategory'%}">Download<span class="sub_icon glyphicon glyphicon-download-alt"></span></a></li>
+          <li><a href="{% url 'logoutPrompt'%}">Log out<span class="sub_icon glyphicon glyphicon-off"></span></a></li>
+           <li><a href="{% url 'register'%}">New user<span class="sub_icon glyphicon glyphicon-user"></span></a></li>
+        </ul>
+      </div>
+          
+      <!-- Page content -->
+      <div id="page-content-wrapper">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <div class="row">
+              <div class="col-md-12">
+              <div class="globalHeader">
+              <p class="well lead">
+              {% block header%}
+              {% endblock header%}
+              </div>
+              
+              </p>
+              <div class="container">
+              {% block content%}
+              {% endblock content%}
+          
+          </div>
+        </div>
+    </div>
+      
+</div>
+</div>
+<script>
+$("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+});
+</script>
+    </body>
+    </html>

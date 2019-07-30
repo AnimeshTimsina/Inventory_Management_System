@@ -1,0 +1,36 @@
+{% extends 'inventory/main.html'%}
+{%load crispy_forms_tags %}
+
+{% block header%}
+Create a category
+{% endblock header%}
+{%block content%}
+  
+
+{%if messages%}
+    {%for message in messages%}
+    <div class="alert alert-{{message.tags}}">
+      {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+    
+      <form method="POST">
+      {% csrf_token %}
+      {{addCategoryForm|crispy}}
+      <button class="btn btn-info" type="Submit" style="width:100px;">Add</button>
+      </form>
+    
+
+
+
+
+
+<div>
+  
+      <h7 class="text"> *Default fields </h7>
+      <p class="text">Name, Model, Working, Out of order, In maintenance, Floor, Cost</p>
+</div>
+ 
+
+{%endblock%}

@@ -1,34 +1,12 @@
-{% extends 'inventory/dashboard.html'%}
-{% load inventory_tags %}
-{%load staticfiles%}
-{%load static%}
-{%load crispy_forms_tags %}
-{%block content%}
-  <style>
-
-  .row1{
-    position:absolute;
-    top:55%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-  }
-
-  </style>
-
-  <div class="row1">
-    
-    <div class="card" style="width:400px;overflow-y:scroll;">
-      <div class="card-body">
-        <h5 class="card-title"> Select the category whose items are to be downloaded in CSV </h5>
-        <ul class="list-group list-group-flush">
-          {% for category in categoryObj%}
-          <a href="{% url 'downloadCSV' category.pk %}"><li class="list-group-item">{{category.category_name}}</li></a>
+{% extends 'inventory/main.html'%}
+{% block header%}
+Download
+{% endblock header%}
+{% block content%}
+<p style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:15px;"> Category </p>
+<div style="width:50%;">
+       {% for category in categoryObj%}
+          <a href="{% url 'downloadCSV' category.pk %}"><li class="list-group-item"><span class="glyphicon glyphicon-download-alt" style="margin-right:20px;"></span>{{category.category_name}}</li></a>
             {% endfor%}
-          </ul>
-      </div>
-    </div>
-    <a class='btn btn-primary' href="{% url 'downloadCSVComplete' %}"> Download CSV of entire database </a>
-  </div>
-
-
-{%endblock%}
+           </div>
+{% endblock content%}

@@ -1,31 +1,18 @@
 import csv
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Categorie, Item, Floor, Room
-from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm
+from .models import Categorie, Item, Floor, Room, SubItem
+from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm,editRoomForm,editItemForm,editCategoryForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import subItemForm
+
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver,Signal
 
 # Create your views here.
-
-@login_required
-def dashboardView(request):
-    categoryDetails = []
-    working_count = in_maintenanace_count = out_of_order_count = 0
-    categoryObj = Categorie.objects.order_by('id')
-    for cat in categoryObj:
-        itemObj = Item.objects.filter(category = cat)
-        for obj in itemObj:
-            working_count += obj.working if obj.working!=0 else 0
-            in_maintenanace_count += obj.in_maintenance if obj.in_maintenance!=0 else 0
-            out_of_order_count += obj.out_of_order if obj.out_of_order!=0 else 0
-        temp = [cat.category_name,cat.id,working_count,out_of_order_count,in_maintenanace_count]
-        categoryDetails.append(temp)
-        working_count = in_maintenanace_count = out_of_order_count = 0
-    context = {'categoryDetails':categoryDetails}
-    return render(request, 'inventory/base.html',context)
 
 @login_required
 def register(request):
@@ -43,27 +30,11 @@ def register(request):
 
 @login_required
 def add1(request):
-    categories = Categorie.objects.all()
-    dataTemp = {}
     if request.method == 'POST':
-        addCategoryform = addCategoryForm(request.POST)
-        if addCategoryform.is_valid():
-            if (request.POST['extraField1']):
-                temp = request.POST['extraField1']
-                dataTemp.update({'field1': temp})
-            if (request.POST['extraField2']):
-                temp = request.POST['extraField2']
-                dataTemp.update({'field2': temp})
-            if (request.POST['extraField3']):
-                temp = request.POST['extraField3']
-                dataTemp.update({'field3': temp})
-            Categorie.objects.create(
-                category_name=request.POST['categoryName'], extra_fields=dataTemp)
-            messages.success(request, f'Category created successfully! Select the category to add some equipments')
-            return redirect('add1')
-    else:
-        addCategoryform = addCategoryForm()
-    context = {'categories': categories, 'addCategoryForm': addCategoryform}
+        category = request.POST['categorySelect']
+        c = Categorie.objects.get(category_name = category)
+        return redirect('add2',c.pk)
+    context = {'categoryObj': Categorie.objects.all()}
     return render(request, 'inventory/add1.html', context)
 
 @login_required
@@ -97,30 +68,41 @@ def add2(request, key):
             if (request.POST['room']):
                 pass
             else:
-                obj.room = Room.objects.get(room_name__exact= 'Store')
-                obj.save()
+                try:
+                     newroom = Room.objects.get(room_name__exact= 'Store')
+                     obj.room = newroom
+                     obj.save()
+                except:
+                     newroom = Room.objects.create(floor = Floor.objects.all()[0], room_no = 0, room_name = 'Store')
+                     obj.room = newroom
+                     obj.save()
 
             messages.success(request, f'Added Successfully!')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            obj = Item.objects.latest('created')
+          
+            return redirect('createSubItem',key=obj.id)
 
     else:
         addItemform = addItemForm(extra_fields_dict=categoryObj.extra_fields)
-    context = {'itemObj': itemObj, 'addItemform': addItemform}
+    context = {'addItemform': addItemform,'category':categoryObj}
     return render(request, 'inventory/add2.html', context)
 
 @login_required
 def addExisting(request, key):
     obj = Item.objects.get(pk=key)
+    working = obj.working
+    outoforder = obj.out_of_order
+    inmaintenance = obj.in_maintenance
     if request.method == 'POST':
         addExistingform = addExistingForm(request.POST)
         if addExistingform.is_valid:
             obj.working += int(request.POST['quantity'])
             obj.save()
             messages.success(request, f'Added Successfully!')
-            return redirect('dashboard')
+            return redirect('advancedSearch')
     else:
         addExistingform = addExistingForm(request.POST)
-    context = {'addExistingform': addExistingform}
+    context = {'addExistingform': addExistingform,'item':obj,'working':working,'out_of_order':outoforder,'in_maintenance':inmaintenance}
     return render(request, 'inventory/addExisting.html', context)
 
 @login_required
@@ -176,9 +158,9 @@ def edit(request,key):
     obj = Item.objects.get(pk=key)
     categoryObj = obj.category
     if request.method == 'POST':
-        addItemform = addItemForm(data=request.POST,extra_fields_dict=categoryObj.extra_fields,instance = obj)
-        if (addItemform.is_valid):
-            addItemform.save()
+        form = editItemForm(data=request.POST,extra_fields_dict=obj.extra_value,instance = obj)
+        if (form.is_valid):
+            form.save()
             obj.save()
             if len(categoryObj.extra_fields) ==1:
                 temp = categoryObj.extra_fields['field1']
@@ -205,34 +187,13 @@ def edit(request,key):
                     obj.extra_value.update({temp3:request.POST[temp3]})
             obj.save()
             messages.success(request, f'Edit Successful!')
-            return redirect('dashboard')
+            return redirect('advancedSearch')
 
     else:
-        addItemform = addItemForm(extra_fields_dict=categoryObj.extra_fields,instance = obj)
-    context = {'addItemform':addItemform}
+        form = editItemForm(extra_fields_dict=obj.extra_value,instance = obj)
+    context = {'addItemform':form,'item':obj.name}
     return render(request,'inventory/edit.html',context)
 
-@login_required
-def editcategory(request):
-    categoryObj = Categorie.objects.all()
-    return render(request,'inventory/editcategory.html',{'categoryObj':categoryObj})
-
-@login_required
-def editcategory2(request,key):
-    categoryObj = Categorie.objects.get(pk=key)
-    if request.method == 'POST':
-        form = categoryEditForm(request.POST,instance=categoryObj)
-        if form.is_valid:
-            try:
-                form.save()
-                messages.success(request, f'Edit successful!')
-            except:
-                messages.warning(request, f'Edit failed! Invalid name')
-            return redirect('editcategory')
-    else:
-        form = categoryEditForm(instance=categoryObj)
-    context = {'form': form}
-    return render(request,'inventory/editcategory2.html',context)
 
 @login_required
 def createroom(request):
@@ -267,10 +228,7 @@ def createfloor(request):
     context = {'createFloorform': createFloorform}
     return render(request,'inventory/createfloor.html',context)
 
-
-
-
-
+@login_required
 def advancedSearch(request):
     if not Categorie.objects.all().exists():
         return HttpResponse('There is no data in the inventory')
@@ -283,13 +241,14 @@ def advancedSearch(request):
         roomValue = 'All'
         categoryValue = 'All'
         categoryValue = Categorie.objects.all()[0].category_name
-    print(categoryValue)
+    
     categoryObj = Categorie.objects.all()       #dropdown list for category section
     floorObj = Floor.objects.all()
     if (floorValue == 'All'):
         roomObj = Room.objects.all()
     else:
-        roomObj = Room.objects.filter(floor = floorValue)
+        tempFloor = Floor.objects.get(floor = floorValue)
+        roomObj = Room.objects.filter(floor = tempFloor)
         
     if (roomValue != 'All'):
         # roomNumber = roomValue.split(':')
@@ -322,7 +281,21 @@ def advancedSearch(request):
         roomValue = int(roomValue)
     if (floorValue!='All'):
         floorValue = int(floorValue)
-    args = {'roomObj':roomObj, 'categoryObj':categoryObj, 'floorObj':floorObj, 'itemObj':itemObj,'floorValue':floorValue, 'roomValue':roomValue, 'categoryValue':categoryValue,'category':category}
+
+    Extrafields = []
+    if (itemObj):
+        tempItem = Item.objects.filter(category = category)[0]
+     
+        if tempItem:
+            for key,value in tempItem.extra_value.items():
+                Extrafields.append(key)
+        else:
+            for key,value in category.extra_fields.items():
+                Extrafields.append(value)
+
+
+
+    args = {'roomObj':roomObj, 'categoryObj':categoryObj, 'floorObj':floorObj, 'itemObj':itemObj,'floorValue':floorValue, 'roomValue':roomValue, 'categoryValue':categoryValue,'category':category,'extrafields':Extrafields}
     return render(request,'inventory/advancedSearch.html',args)
 
 @login_required
@@ -344,40 +317,274 @@ def downloadCSV(request,key):
         if (obj.extra_value):
             for key,value in obj.extra_value.items():
                 valueField.append(value)
+        
         writer.writerow(valueField)
     
     return response
-    
+
+
 @login_required
 def chooseCategory(request):
     return render(request,'inventory/chooseCategory.html',{'categoryObj':Categorie.objects.all()})
 
 
 @login_required
-def downloadCSVComplete(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
-    writer = csv.writer(response)
-   
-    for instance in Categorie.objects.all():
-        itemsObj = Item.objects.filter(category = instance)
-        listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'In Maintenance', 'Out of order', 'Created', 'Last Modified']
-        if (instance.extra_fields):
-            for key,value in instance.extra_fields.items():
-                listOfFields.append(value)
-        writer.writerow(listOfFields)
-        for obj in itemsObj:
-            valueField = [obj.name,obj.model,obj.cost_per_item,obj.room,obj.date_of_acquire,obj.working,obj.in_maintenance,obj.out_of_order,obj.created,obj.last_modified]
-            if (obj.extra_value):
-                for key,value in obj.extra_value.items():
-                    valueField.append(value)
-            writer.writerow(valueField)
-        writer.writerow([])
-        writer.writerow([])
+def chooseCategory(request):
+    return render(request,'inventory/chooseCategory.html',{'categoryObj':Categorie.objects.all()})
+
+@login_required
+def createSubItem(request,key):
+    itemObj = Item.objects.get(pk=key)
+    itemName = itemObj.name
+    if request.method == 'POST':
         
-    
-    return response
-    
+        form = subItemForm(request.POST)
+        if form.is_valid:
+            try:
+               
+                form.save()
+                obj = SubItem.objects.latest('id')
+                obj.item = itemObj
+                obj.save()
+                messages.success(request, f'Sub-item is successfully created!')
+            except:
+                messages.warning(request, f'Sub-item is either invalid or already available!')
+            return redirect('createSubItem',key=key)
+    else:
+        form = subItemForm()
+    context = {'subItemForm': form,'itemName':itemName}
+    return render(request,'inventory/createsubItem.html',context)
+
 @login_required
-def chooseCategory(request):
-    return render(request,'inventory/chooseCategory.html',{'categoryObj':Categorie.objects.all()})
+def createCategory(request):
+    dataTemp = {}
+    if request.method == 'POST':
+        addCategoryform = addCategoryForm(request.POST)
+        if addCategoryform.is_valid():
+            if (request.POST['extraField1']):
+                temp = request.POST['extraField1']
+                dataTemp.update({'field1': temp})
+            if (request.POST['extraField2']):
+                temp = request.POST['extraField2']
+                dataTemp.update({'field2': temp})
+            if (request.POST['extraField3']):
+                temp = request.POST['extraField3']
+                dataTemp.update({'field3': temp})
+            Categorie.objects.create(
+                category_name=request.POST['categoryName'], extra_fields=dataTemp)
+            messages.success(request, f'Category created successfully!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    else:
+        addCategoryform = addCategoryForm()
+    context = {'addCategoryForm': addCategoryform}
+    return render(request, 'inventory/addCategory.html', context)
+
+
+def logoutPrompt(request):
+    return render(request,'inventory/logout.html')
+
+@login_required
+def settings(request):
+    return render(request,'inventory/settings.html')
+
+@login_required
+def deletefloor(request):
+    if request.method == 'POST':
+        try:
+           Floor.objects.get(floor = request.POST['floorNumber']).delete()
+           messages.success(request, f'Floor deleted successfully!')
+        except:
+           messages.warning(request, f'Unable to delete the floor!')
+        return redirect('deletefloor')
+    return render(request,'inventory/deletefloor.html',{'floorObj':Floor.objects.all()})
+
+
+@login_required
+def showRooms(request):
+    return render(request,'inventory/showrooms.html',{'roomObj':Room.objects.all()})
+
+@login_required
+def editRoom(request,key):
+    obj = Room.objects.get(pk=key)
+    if request.method=='POST':
+        form = editRoomForm(request.POST,instance=obj)
+        if form.is_valid:
+            form.save()
+            messages.success(request, f'Room updated successfully!')
+            return redirect('showRooms')
+        else:
+            messages.warning(request, f'Invalid input')
+    else:
+        form = editRoomForm(instance=obj)
+    args = {'form':form}
+    return render(request,'inventory/editroom.html',args)
+
+@login_required
+def deleteRoom(request):
+    if request.method == 'POST':
+        try:
+          print(request.POST['roomNumber'])
+          print(Room.objects.get(room_no = request.POST['roomNumber']))
+          Room.objects.get(room_no = request.POST['roomNumber']).delete()
+          messages.success(request, f'Room deleted successfully!')
+        except:
+          messages.warning(request, f'Unable to delete the room')
+        return redirect('deleteRoom')
+    return render(request,'inventory/deleteRoom.html',{'roomObj':Room.objects.all()})
+
+@login_required
+def editCategoryView(request,key):
+    categoryObj = Categorie.objects.get(pk=key)
+    if len(categoryObj.extra_fields) ==1:
+        initialValue1 = categoryObj.extra_fields['field1']
+    elif len(categoryObj.extra_fields) ==2:
+        initialValue1 = categoryObj.extra_fields['field1']
+        initialValue2 = categoryObj.extra_fields['field2']
+    elif len(categoryObj.extra_fields) ==3:
+        initialValue1 = categoryObj.extra_fields['field1']
+        initialValue2 = categoryObj.extra_fields['field2']
+        initialValue3 = categoryObj.extra_fields['field3']
+    
+    if request.method == 'POST':
+        form = editCategoryForm(data=request.POST,extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)
+        if (form.is_valid):
+            form.save()
+            if len(categoryObj.extra_fields) ==1:
+                firstKey = request.POST['field1']
+                categoryObj.extra_fields['field1'] = firstKey
+            elif len(categoryObj.extra_fields) ==2:
+                firstKey = request.POST['field1']
+                secondKey = request.POST['field2']
+                categoryObj.extra_fields['field1'] = firstKey
+                categoryObj.extra_fields['field2'] = secondKey
+            elif len(categoryObj.extra_fields) ==3:
+                firstKey = request.POST['field1']
+                secondKey = request.POST['field2']
+                thirdKey = request.POST['field3']
+                categoryObj.extra_fields['field1'] = firstKey
+                categoryObj.extra_fields['field2'] = secondKey
+                categoryObj.extra_fields['field3'] = thirdKey
+           
+            categoryObj.save()
+            itemObj = Item.objects.filter(category = categoryObj)
+           
+            for item in itemObj:
+                if len(categoryObj.extra_fields) ==1:
+                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+                    
+                elif len(categoryObj.extra_fields) ==2:
+
+                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+                    item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
+                   
+                    
+                elif len(categoryObj.extra_fields) ==3:
+                    
+                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+                    item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
+                    item.extra_value[thirdKey] = item.extra_value.pop(initialValue3)
+                item.save()
+              
+            messages.success(request, f'Edit Successful!')
+            return redirect('dashboard')
+
+    else:
+        form = editCategoryForm(extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)
+    context = {'form':form}
+    return render(request,'inventory/editcategory.html',context)
+
+@login_required
+def showCategories(request):
+    return render(request,'inventory/showCategories.html',{'categoryObj':Categorie.objects.all()})
+
+@login_required
+def deleteCategorie(request):
+    if request.method == 'POST':
+        try:
+            Categorie.objects.get(category_name = request.POST['category']).delete()
+            messages.success(request, f'Category deleted successfully!')
+        except:
+            messages.warning(request, f'Unable to delete the category!')
+        return redirect('deleteCategory')
+    return render(request,'inventory/deleteCategory.html',{'categoryObj':Categorie.objects.all()})
+
+@login_required
+def editFloor(request):
+    if request.method == 'POST':
+        try:
+            floorObj = Floor.objects.get(floor = request.POST['oldFloor'])
+            floorObj.floor = request.POST['newFloor']
+            floorObj.save()
+            messages.success(request, f'Floor updated successfully!')
+        except:
+            messages.warning(request, f'Unable to update the floor!')
+        return redirect('editFloor')
+    return render(request,'inventory/editFloor.html',{'floorObj':Floor.objects.all()})
+
+
+@login_required
+def editAccount(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account updated for {username}! Login Again')
+            return redirect('login')
+    else:
+        form = UserCreationForm(instance=request.user)
+    context = {'form': form}
+    return render(request, 'inventory/editAccount.html', context)
+
+@login_required
+def homeView(request):
+    return render(request,'inventory/home.html')
+
+@login_required
+def editSubItem(request,key):
+    subItemObj = SubItem.objects.get(pk=key)
+    itemObj = Item.objects.get(pk = subItemObj.item.pk)
+
+    if request.method == 'POST':
+        
+        form = subItemForm(request.POST,instance=subItemObj)
+        if form.is_valid:
+            try:   
+                form.save()
+                subItemObj.item = itemObj
+                subItemObj.save()
+                messages.success(request, f'Sub-item is successfully updated!')
+            except:
+                messages.warning(request, f'Unable to update sub-item')
+            return redirect('advancedSearch')
+    else:
+        form = subItemForm(instance=subItemObj)
+    context = {'subItemForm': form,'subitem':subItemObj.name,'item':itemObj.name}
+    return render(request,'inventory/editSubItem.html',context)
+        
+@login_required
+def addExistingSubItem(request,key):
+    subItemObj = SubItem.objects.get(pk=key)
+    working = subItemObj.working
+    outoforder = subItemObj.out_of_order
+    inmaintenance = subItemObj.in_maintenance
+    if request.method == 'POST':
+        addExistingform = addExistingForm(request.POST)
+        if addExistingform.is_valid:
+            subItemObj.working += int(request.POST['quantity'])
+            subItemObj.save()
+            messages.success(request, f'Added Successfully!')
+            return redirect('advancedSearch')
+    else:
+        addExistingform = addExistingForm(request.POST)
+    context = {'addExistingform':addExistingform,'subitem':subItemObj,'working':working,'out_of_order':outoforder,'in_maintenance':inmaintenance}
+    return render(request,'inventory/addExistingSubItem.html',context)
+
+@login_required
+def deleteSubItem(request,key):
+    try:
+        SubItem.objects.get(pk=key).delete()
+        messages.success(request, f'Deleted Successfully!')
+    except:
+        messages.warning(request, f'Unable to delete sub-item')
+    return redirect('advancedSearch')

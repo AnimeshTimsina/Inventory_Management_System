@@ -1,0 +1,6 @@
+names = ['Decade Resistance box X 5 upto 1 MOhm', 'Decade Resistance box x 4 upto 100Ohm', 'CA 401 AMP Meter', 'Protek A432 Multimeter' , 'Escoro Single Source 0: 30V Power Supply', 'Autonix Power Supply', 'Function Generator 5132 Philips', 'Protoboard', 'Pulse Generator Philips', 'HP Digital Multimeter', 'Fluke/Philips RLC', 'Oscilloscope Hameg 30MHz', 'BK Precision Circuit Analyser', 'Curve Tracer', 'Dual Output Power Supply M.N', 'Computer set NEC', 'Hitachi Multimedia Projector']
+
+models = ['IFT','IFT','','','','','','','PM5705','34401A','PM6303A','HM303-3','','HM 8042','TW-5050D','','']
+
+w = [12,12,7,9,1,1,12,11,12,12,1,2,2,2,6,1,1]
+

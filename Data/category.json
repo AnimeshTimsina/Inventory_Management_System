@@ -1,0 +1,18 @@
+[
+    {
+        "model": "inventory.categorie",
+        "pk": 1,
+        "fields": {
+            "category_name": "Lab",
+            "extra_fields": {}
+        }
+    },
+    {
+        "model": "inventory.categorie",
+        "pk": 3,
+        "fields": {
+            "category_name": "TrainerKit",
+            "extra_fields": {}
+        }
+    }
+]

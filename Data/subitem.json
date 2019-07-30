@@ -1,0 +1,483 @@
+[
+    {
+        "model": "inventory.subitem",
+        "pk": 1,
+        "fields": {
+            "item": 62,
+            "name": "Waveform Generator/Analyzer",
+            "model": "ED 2960A",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 2,
+        "fields": {
+            "item": 62,
+            "name": "Superhet Receiver",
+            "model": "ED 2960B",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 3,
+        "fields": {
+            "item": 62,
+            "name": "Double Sideband",
+            "model": "ED 2960C",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 4,
+        "fields": {
+            "item": 62,
+            "name": "Single Sideband",
+            "model": "ED 2960D",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 5,
+        "fields": {
+            "item": 62,
+            "name": "Sample Hold and Multiplex",
+            "model": "ED 2960 E",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 6,
+        "fields": {
+            "item": 62,
+            "name": "Pulse Code Modulator",
+            "model": "ED 2960F",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 7,
+        "fields": {
+            "item": 62,
+            "name": "Delta Modulator",
+            "model": "ED 2960G",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 25,
+        "fields": {
+            "item": 110,
+            "name": "73551 Handset with Cradle Content",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 26,
+        "fields": {
+            "item": 110,
+            "name": "73553 Pulse Dialer Push Button",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 27,
+        "fields": {
+            "item": 110,
+            "name": "73580 Subscriber Matching Unit",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 28,
+        "fields": {
+            "item": 110,
+            "name": "73554 Dialer Push Button",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 29,
+        "fields": {
+            "item": 110,
+            "name": "72689 Power Supply 28v 12v",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 30,
+        "fields": {
+            "item": 110,
+            "name": "73581 Multi Frequency Receiver",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 31,
+        "fields": {
+            "item": 110,
+            "name": "73582 Mux and Demux",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 32,
+        "fields": {
+            "item": 110,
+            "name": "73583 Switching System",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 33,
+        "fields": {
+            "item": 110,
+            "name": "73586 Control Unit",
+            "model": null,
+            "cost_per_item": null,
+            "working": 1,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 34,
+        "fields": {
+            "item": 111,
+            "name": "Data Source",
+            "model": "ED 2970 A",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 35,
+        "fields": {
+            "item": 111,
+            "name": "Data Format",
+            "model": "ED 2970 B",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 36,
+        "fields": {
+            "item": 111,
+            "name": "Double Balanced Modulators",
+            "model": "ED 2970 C",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 37,
+        "fields": {
+            "item": 111,
+            "name": "Carrier Phase Shifter",
+            "model": "ED 2970 D",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 38,
+        "fields": {
+            "item": 111,
+            "name": "VCO",
+            "model": "ED 2970 E",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 39,
+        "fields": {
+            "item": 111,
+            "name": "Data Clock Regenerator",
+            "model": "ED 2970 F",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 40,
+        "fields": {
+            "item": 111,
+            "name": "Data Recovery",
+            "model": "ED 2970 G",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 41,
+        "fields": {
+            "item": 111,
+            "name": "Data Recovery",
+            "model": "ED 2970 H",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 42,
+        "fields": {
+            "item": 111,
+            "name": "Low Pass Filter",
+            "model": "ED 2970 J",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 43,
+        "fields": {
+            "item": 111,
+            "name": "Audio Module",
+            "model": "ED 2970 K",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 44,
+        "fields": {
+            "item": 111,
+            "name": "Tuned Circuit",
+            "model": "ED 2970 L",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 45,
+        "fields": {
+            "item": 111,
+            "name": "Power Supply",
+            "model": "ED 2970 M",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 46,
+        "fields": {
+            "item": 112,
+            "name": "Signal Source",
+            "model": "ED 2950 A",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 47,
+        "fields": {
+            "item": 112,
+            "name": "Amplifier",
+            "model": "ED 2950 B",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 48,
+        "fields": {
+            "item": 112,
+            "name": "Detector",
+            "model": "ED 2950 C",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 49,
+        "fields": {
+            "item": 112,
+            "name": "Balanced Modulator",
+            "model": "ED 2950 D",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 50,
+        "fields": {
+            "item": 112,
+            "name": "Active Filter",
+            "model": "ED 2950 E",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 51,
+        "fields": {
+            "item": 112,
+            "name": "Passive Filter & Diode Bridge",
+            "model": "ED 2950 F",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 52,
+        "fields": {
+            "item": 112,
+            "name": "Tuned Circuit",
+            "model": "ED 2950 H",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 53,
+        "fields": {
+            "item": 112,
+            "name": "Crystal Unit",
+            "model": "ED 2950 J",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    },
+    {
+        "model": "inventory.subitem",
+        "pk": 54,
+        "fields": {
+            "item": 112,
+            "name": "Aerial Unit",
+            "model": "ED 2950 K",
+            "cost_per_item": null,
+            "working": 6,
+            "in_maintenance": 0,
+            "out_of_order": 0
+        }
+    }
+]

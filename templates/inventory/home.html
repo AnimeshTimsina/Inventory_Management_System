@@ -1,0 +1,126 @@
+{% extends 'inventory/main.html'%}
+{%load crispy_forms_tags %}
+{% load static%}
+{%load staticfiles%}
+{% block header%}
+Inventory
+{% endblock header%}
+{% block content%}
+  <style media="screen">
+  body{
+    overflow-x: hidden;
+  }
+  .row{
+    background-color: #E1E1E1;
+    margin-top: 10px;
+  }
+  .base{
+    width: 100px;
+    margin: 0 auto;
+  }
+  .card-title{
+    text-align: center;
+  }
+  .flexbox{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+    .row1 span{
+      display:inline-block;
+      padding:10px;
+
+    }
+    .b span{
+      display: block;
+      font-family: Helvetica;
+      color:#5E5D5D;
+    }
+    input[type=text] {
+    width: 75%;
+    height:18px;
+    padding: 15px 22px;
+    margin: 6px 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #AEAEAE;
+    }
+    .c{
+      font-size: 20px;
+      font-weight: bold;
+      font-family: Helvetica;
+      color: #5E5D5D;
+      padding: 0px 0px 0px 22px;
+    }
+    .verticalLine {
+      border-left: 1.2px solid #D2D2D2;
+    }
+    .card{
+      box-sizing: border-box;
+      border-radius: 6px;
+    }
+
+  </style>
+
+    <div class="row">
+    <div class="col-lg-7">
+      <br>
+      <span class="c">Inventory</span>
+      <br>
+      <br>
+    <div class="flexbox">
+    <div>
+    <div class="card" style="width:200px">
+   <div class="card-body">
+     <h4 class="card-title">103</h4>
+   </div>
+   <div class=base>
+  <span> <img class="card-img-bottom row1" src="{% static 'inventory/images/working.png'%}" alt="Card image" style="width:20px;height:20px;"><span>
+   <span style="font-size:12px;" class="row1"><b>Working</b></span>
+ </div>
+ </div>
+</div>
+
+<div>
+<div class="card" style="width:200px">
+<div class="card-body">
+ <h4 class="card-title">51</h4>
+</div>
+<div class=base>
+<span> <img class="card-img-bottom row1" src="{% static 'inventory/images/outoforder.png'%}" alt="Card image" style="width:17px;height:17px;"><span>
+<span style="font-size:12px;" class="row1"><b>OutOfOrder</b></span>
+</div>
+</div>
+</div>
+
+<div>
+<div class="card" style="width:200px">
+<div class="card-body">
+ <h4 class="card-title">29</h4>
+</div>
+<div class=base>
+<span> <img class="card-img-bottom row1" src="{% static 'inventory/images/inmaintenance.png'%}" alt="Card image" style="width:16px;height:16px;"><span>
+<span style="font-size:12px;" class="row1"><b>Maintenance</b></span>
+</div>
+</div>
+</div>
+</div>
+<br>
+<br>
+</div>
+
+<div class="col-lg-5 verticalLine">
+  <br>
+  <span class="c">Inventory Summary</span>
+  <br>
+  <br>
+  <span><input class="b" type="text" name="" value="Total number of categories"></span>
+  <span><input class="b" type="text" name="" value="Total number of items"></span>
+  <br>
+  <br>
+</div>
+
+</div>
+<a href="{%url 'add1' %}">Add</a>
+{% endblock content%}

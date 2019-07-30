@@ -1,39 +1,15 @@
-{% extends 'inventory/dashboard.html'%}
-{% load inventory_tags %}
-{%load staticfiles%}
-{%load static%}
+{% extends 'inventory/main.html'%}
 {%load crispy_forms_tags %}
-{%block content%}
-  <style>
+{% block header%}
+Update Categorie
+{% endblock header%}
+{% block content %}
 
-  .row1{
-    position:absolute;
-    top:55%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-  }
+ 
 
-  </style>
-
-  <div class="row1">
-    {%if messages%}
-    {%for message in messages%}
-    <div class="alert alert-{{message.tags}}">
-      {{message}}
-    </div>
-    {%endfor%}
-    {%endif%}
-    <div class="card" style="width:400px;overflow-y:scroll;">
-      <div class="card-body">
-        <h5 class="card-title"> Select the category you want to edit </h5>
-        <ul class="list-group list-group-flush">
-          {% for category in categoryObj%}
-          <a href="{% url 'editcategory2' category.pk %}"><li class="list-group-item">{{category.category_name}}</li></a>
-            {% endfor%}
-          </ul>
-      </div>
-    </div>
-  </div>
-
-
-{%endblock%}
+<form method="POST">
+{% csrf_token %}
+ {{form|crispy}}
+      <button class="btn btn-info" type="Submit">Update</button>
+  </form>
+{% endblock content %}

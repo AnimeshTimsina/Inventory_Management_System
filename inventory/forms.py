@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Item,Room,Floor,Categorie
+from .models import Item,Room,Floor,Categorie,SubItem
 
 
 class addCategoryForm(forms.Form):
@@ -13,9 +13,31 @@ class addCategoryForm(forms.Form):
 class addItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.extra_fields_dict = kwargs.pop('extra_fields_dict')
+   
         super().__init__(*args, **kwargs)
+      
         for key, value in self.extra_fields_dict.items():
             self.fields[value] = forms.CharField(required=False)
+            
+        for field in self.Meta.Notrequired:
+            self.fields[field].required = False
+
+
+    class Meta:
+        model = Item
+        fields = ['name', 'model', 'cost_per_item', 'room',
+                  'date_of_acquire', 'working', 'in_maintenance', 'out_of_order']
+        Notrequired = ['room','cost_per_item']
+
+class editItemForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.extra_fields_dict = kwargs.pop('extra_fields_dict')
+   
+        super().__init__(*args, **kwargs)
+      
+        for key, value in self.extra_fields_dict.items():
+            self.fields[key] = forms.CharField(required=False,initial=value)
+            
         for field in self.Meta.Notrequired:
             self.fields[field].required = False
 
@@ -53,9 +75,34 @@ class addRoomForm(ModelForm):
 class addFloorForm(ModelForm):
     class Meta:
         model = Floor
-        fields = '__all__'
+        fields = ['floor']
 
 class categoryEditForm(ModelForm):
     class Meta:
         model = Categorie
         fields = ['category_name']
+
+class subItemForm(ModelForm):
+    class Meta:
+        model = SubItem
+        fields = ['name','model','cost_per_item','working','in_maintenance','out_of_order']
+    
+    
+class editRoomForm(ModelForm):
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+class editCategoryForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.extra_fields_dict = kwargs.pop('extra_fields_dict')
+   
+        super().__init__(*args, **kwargs)
+      
+        for key, value in self.extra_fields_dict.items():
+            self.fields[key] = forms.CharField(required=False,initial=value)
+
+    class Meta:
+        model = Categorie
+        fields = ['category_name']
+        
