@@ -5,9 +5,9 @@ from .models import Item,Room,Floor,Categorie,SubItem
 
 class addCategoryForm(forms.Form):
     categoryName = forms.CharField(max_length=30)
-    extraField1 = forms.CharField(max_length=30, required=False)
-    extraField2 = forms.CharField(max_length=30, required=False)
-    extraField3 = forms.CharField(max_length=30, required=False)
+    extraField1 = forms.CharField(label='New field 1',max_length=30, required=False)
+    extraField2 = forms.CharField(label='New field 2',max_length=30, required=False)
+    extraField3 = forms.CharField(label='New field 3',max_length=30, required=False)
 
 
 class addItemForm(ModelForm):

@@ -15,7 +15,7 @@ Add an item
 <form method="POST">
 {% csrf_token %}
  <div class="form-group">
- <p style="color:grey;"> *If you want to add an existing item, add from search table </p>
+ <p style="color:grey;"> *If you want to add an existing item, add from Search </p>
     <label for="categorySelect">Select a category for the item</label>
     <select class="form-control" id="categorySelect" name="categorySelect">
    {% for obj in categoryObj%}
