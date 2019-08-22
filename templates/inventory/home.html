@@ -4,153 +4,156 @@
 {%load staticfiles%}
 {% load inventory_tags%}
 {% block header%}
-Dashboard
+
+<span style="font-size:20px;">Dashboard</span>
 {% endblock header%}
 {% block content%}
+ <link rel="stylesheet" href="{% static 'inventory/css/bootstrap.min.css' %}">
+
   <style media="screen">
+
   body{
     overflow-x: hidden;
+    font-family :"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:14px;
   }
-  .row1{
-    background-color: #E1E1E1;
-    margin-top: 10px;
-  }
-  .base{
-    width: 100px;
-    margin: 0 auto;
-  }
-  .card-title{
-    text-align: center;
-  }
-  .flexbox{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-    .row1 span{
-      display:inline-block;
-      padding:10px;
-
-    }
-    .b span{
-      display: block;
-      font-family: Helvetica;
-      color:#5E5D5D;
-    }
-    input[type=text] {
-    width: 75%;
-    height:18px;
-    padding: 15px 22px;
-    margin: 6px 5px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border-width: 1px;
-    border-color: #AEAEAE;
-    }
-    .c{
-      font-size: 20px;
-      font-weight: bold;
-      font-family: Helvetica;
-      color: #5E5D5D;
-      padding: 0px 0px 0px 22px;
-    }
-    .verticalLine {
-      border-left: 1.2px solid #D2D2D2;
-    }
-    .card{
-      box-sizing: border-box;
-      border:1px solid #000000 ;
-      border-radius: 6px;
-      background-color:white;
-    }
-    .row2 {
-      display: table;
-      width: 100%;
-      background-color:rgb(240,237,237);
-    }
-    .b {
-      display: table-cell;
-      padding: 16px;
+.myDiv {
+  font-size:13px;
 }
-
+.myValue {
+  font-size:18px;
+}
+#myBar {
+ margin-top:20px;
+}
+.row2 {
+  padding-top:40px;
+}
+.myCard {
+  padding: 3px 3px 3px 3px;
+}
+.box1{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
   </style>
+ 
+
   <div style="width:105%;">
-    <div class="row row1" style="width:100%;">
-    <div class="col-lg-7">
-      <br>
-      <span class="c">Inventory</span>
-      <br>
-      <br>
-    <div class="flexbox">
-    <div>
-    <div class="card" style="width:200px">
-   <div class="card-body">
-     <h4 class="card-title">103</h4>
-   </div>
-   <div class=base>
-  <span> <img class="card-img-bottom row1" src="{% static 'inventory/images/working.png'%}" alt="Card image" style="width:20px;height:20px;"><span>
-   <span style="font-size:12px;" class="row1"><b>Working</b></span>
- </div>
- </div>
-</div>
-
-<div>
-<div class="card" style="width:200px">
-<div class="card-body">
- <h4 class="card-title">51</h4>
-</div>
-<div class=base>
-<span> <img class="card-img-bottom row1" src="{% static 'inventory/images/outoforder.png'%}" alt="Card image" style="width:17px;height:17px;"><span>
-<span style="font-size:12px;" class="row1"><b>OutOfOrder</b></span>
-</div>
-</div>
-</div>
-
-<div>
-<div class="card" style="width:200px">
-<div class="card-body">
- <h4 class="card-title">29</h4>
-</div>
-<div class=base>
-<span> <img class="card-img-bottom row1" src="{% static 'inventory/images/inmaintenance.png'%}" alt="Card image" style="width:16px;height:16px;"><span>
-<span style="font-size:12px;" class="row1"><b>Maintenance</b></span>
-</div>
-</div>
-</div>
-</div>
-<br>
-<br>
-</div>
-
-<div class="col-lg-5 verticalLine">
-  <br>
-  <span class="c">Inventory Summary</span>
-  <br>
-  <br>
-  <span><input class="b" type="text" name="" value="Total number of categories"></span>
-  <span><input class="b" type="text" name="" value="Total number of items"></span>
-  <br>
-  <br>
-</div>
-
-</div>
-
+   <div class="row">
+                    <div class="col-md-6 col-xl-4 mb-4">
+                        <div class="card shadow border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
+                                        <div class="box1"><div class="myDiv">working</div> 
+                                        <div>
+                                         <img class="card-img-bottom" src="{% static 'inventory/images/working.svg'%}" alt="Card image" style="width:20px;height:20px;opacity: 0.5;">
+                                        </div>
+                                        </div>
+                                        </div>
+               
+                                          <div class="progress progress-sm" id="myBar">
+                                                    <div class="progress-bar bg-success" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{% working_percentage %}%;"></div>
+                                                </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0 myValue"><span>{%working_count%}</span></div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-4">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                           <div class="box1"><div class="myDiv">Out of order</div> 
+                                        <div>
+                                         <img class="card-img-bottom" src="{% static 'inventory/images/out_of_order.svg'%}" alt="Card image" style="width:20px;height:20px;opacity: 0.5;">
+                                        </div>
+                                        </div>
+                                        </div>
+                                         <div class="progress progress-sm" id="myBar">
+                                                    <div class="progress-bar bg-warning" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{% out_of_order_percentage %}%;"></div>
+                                                </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0 myValue"><span>{%out_of_order_count%}</span></div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <div class="col-md-6 col-xl-4 mb-4">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
+                                         <div class="box1"><div class="myDiv">Repairable</div> 
+                                        <div>
+                                         <img class="card-img-bottom" src="{% static 'inventory/images/in_maintenance.svg'%}" alt="Card image" style="width:20px;height:20px;opacity: 0.5;">
+                                        </div>
+                                        </div>
+                                        </div>
+                                         <div class="progress progress-sm" id="myBar">
+                                                    <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{% in_maintenance_percentage %}%;"></div>
+                                                </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0 myValue"><span>{%in_maintenance_count%}</span></div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
     <div class="row row2" style="width:100%;">
       <br>
-      <div class="col-md-6 card b" style="">
-      <h5>Items based on Room</h5>
-        <canvas id="myChart2" style="">
+      <div class="col-md-6 col-xl-6 card shadow py-2" style="">
+      <div class="card-body">
+      <h3 style="font-weight:bold;">Items based on Room</h3>
+        <canvas id="myChart2" style="padding-top:20px;">
         </canvas>
+        <br>
+        <hr>
+        <span style="display:table;margin:auto;"><h4>Number of items</h4></span>
+        
+        <span style="font-weight:bold;font-size:40px;display:table;margin:auto;color:#FF9800;">{% total_products_count %}</span>
+        </div>
       </div>
-      <div class="col-md-1 b">
 
-      </div>
 
-      <div class="col-md-5 card b" style="">
-       <h5>Items based on Category</h5>
-        <canvas id="myChart1">
+      <div class="col-md-5 col-xl-6 card shadow py-2" >
+      <div class="card-body">
+       <h3 style="font-weight:bold;">Items based on Category</h3>
+        <canvas id="myChart1" style="padding-top:20px;">
         </canvas>
+        <br>
+        
+        <hr>
+        <div class="row">
+        <div class="col">
+        <span style="display:table;margin:auto;"><h4>Number of categories</h4></span>
+</div>
+<div class="col">
+<span style="display:table;margin:auto;"><h4>Number of item types</h4></span>
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+<span style="font-weight:bold;font-size:40px;display:table;margin:auto;color:#009688;">{% total_categories_count%}</span>
+</div>
+<div class="col">
+<span style="font-weight:bold;font-size:40px;display:table;margin:auto;color:#795548;">{% total_item_type_count%}</span>
+</div>
+</div>
+        </div>
         <br>
         <br>
 
@@ -158,7 +161,9 @@ Dashboard
 
     </div>
 </div>
+  
 
+ 
 <script>
 
 function decodeHtml(html) {

@@ -4,3 +4,18 @@ models = ['IFT','IFT','','','','','','','PM5705','34401A','PM6303A','HM303-3',''
 
 w = [12,12,7,9,1,1,12,11,12,12,1,2,2,2,6,1,1]
 
+
+
+
+c=Categorie.objects.all()[0]
+r=Room.objects.get(room_name = 'Project Lab')
+
+
+names=['Fluke 19 Digital Multimeter','Sanwa 400 Digital Multimeter','Digital Oscilloscope','Function Generator','Dual Power Supply','Proto Board','Drill Machine','Grinder Machine','Table Vice','Cupboard Common','Rack Pigeon hole','Steel Bookcase','Student Work Table','Student Table','Student Chair','White Board']
+
+models = ['','','54600B','TC37708','TW5050D','','','','','Steel','Steel','','Wooden','Wooden','Wooden','Wooden']
+
+w=[5,4,4,2,0,11,1,1,1,7,2,1,24,12,36,1]
+
+for i in range(len(w)):
+	Item.objects.create(category = c, name=names[i], model=models[i], room = r, working=w[i])

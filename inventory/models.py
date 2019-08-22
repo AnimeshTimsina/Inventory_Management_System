@@ -5,12 +5,13 @@ import datetime
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
+from django.core.validators import MinValueValidator
 
 
 def validate_single_word(value):
      if (' ' in value) == True:
         raise ValidationError(
-            _('%(value)s contains space '),
+            ('%(value)s contains space '),
             params={'value': value},
         )
 
@@ -32,14 +33,14 @@ class Item(models.Model):
     model = models.CharField(max_length=50, default='Generic',
                              help_text='Enter the model of the item', blank=True, null=True)
     cost_per_item = models.DecimalField(
-        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per item',blank=True)
+        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per item',blank=True,validators=[MinValueValidator(0)])
     room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,
                              help_text='Select room where it is kept')
     date_of_acquire = models.DateField(
         default=datetime.date.today, help_text='Enter the date of acquire')
-    working = models.IntegerField(default=0)
-    in_maintenance = models.IntegerField(default=0)
-    out_of_order = models.IntegerField(default=0)
+    working = models.IntegerField(default=0,validators=[MinValueValidator(0)])
+    in_maintenance = models.IntegerField(default=0,validators=[MinValueValidator(0)])
+    out_of_order = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     created = models.DateTimeField(auto_now_add=True, null=True)
     last_modified = models.DateTimeField(auto_now=True, null=True)
     extra_value = JSONField(blank=True, null=True, default={})
@@ -47,12 +48,12 @@ class Item(models.Model):
         return "{}-{}".format(self.name, self.model)
 
 class Floor(models.Model):
-    floor = models.PositiveSmallIntegerField(help_text='Enter the floor number')
+    floor = models.PositiveSmallIntegerField(help_text='Enter the floor number',validators=[MinValueValidator(0)])
     def __str__(self):
         return str(self.floor)
 
 class Room(models.Model):
-    room_no = models.PositiveSmallIntegerField(help_text='Enter the room number')
+    room_no = models.PositiveSmallIntegerField(help_text='Enter the room number',validators=[MinValueValidator(0)])
     room_name = models.CharField(max_length=50, default='Generic',
                                  help_text='Enter the name of the room')
     floor = models.ForeignKey(
@@ -67,10 +68,10 @@ class SubItem(models.Model):
     model = models.CharField(max_length=50, default='Generic',
                              help_text='Enter the model of the sub-item', blank=True, null=True)
     cost_per_item = models.DecimalField(
-        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per sub-item',blank=True)
-    working = models.IntegerField(default=0)
-    in_maintenance = models.IntegerField(default=0)
-    out_of_order = models.IntegerField(default=0)
+        decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per sub-item',blank=True,validators=[MinValueValidator(0)])
+    working = models.IntegerField(default=0,validators=[MinValueValidator(0)])
+    in_maintenance = models.IntegerField(default=0,validators=[MinValueValidator(0)])
+    out_of_order = models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
     def __str__(self):
         return "{}-{}".format(self.name, self.model)

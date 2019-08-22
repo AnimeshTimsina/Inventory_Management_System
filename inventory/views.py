@@ -44,6 +44,7 @@ def add2(request, key):
     if request.method == 'POST':
         addItemform = addItemForm(data=request.POST, extra_fields_dict=categoryObj.extra_fields)
         if (addItemform.is_valid):
+          
             addItemform.save()
             obj = Item.objects.latest('created')
             obj.category = categoryObj
@@ -240,7 +241,8 @@ def advancedSearch(request):
         floorValue = 'All'
         roomValue = 'All'
         categoryValue = 'All'
-        categoryValue = Categorie.objects.all()[0].category_name
+        categoryValue = Categorie.objects.order_by('id')[0].category_name
+    print(categoryValue)
     
     categoryObj = Categorie.objects.all()       #dropdown list for category section
     floorObj = Floor.objects.all()
@@ -254,15 +256,16 @@ def advancedSearch(request):
         # roomNumber = roomValue.split(':')
         # print(roomValue)
         tempRoomObj = Room.objects.get(room_no = int(roomValue))
+       
         # print(floorValue)
   
         if (floorValue!='All') and (int(tempRoomObj.floor.floor) != int(floorValue)):
            roomValue = 'All'
   
     category = Categorie.objects.get(category_name = str(categoryValue))
-   
+  
     itemObj = Item.objects.filter(category = category)
-    
+ 
     if (roomValue == 'All'):
         itemTempObj = itemObj
         count=0
@@ -276,7 +279,9 @@ def advancedSearch(request):
                 itemObj |= itemTempObj.filter(room = instance)
             count = count+1
     else:
-        itemObj = itemObj.filter(room = roomValue)
+        myroom = Room.objects.get(room_no = int(roomValue))
+        itemObj = itemObj.filter(room = myroom)
+        print(itemObj)
     if (roomValue!='All'):
         roomValue = int(roomValue)
     if (floorValue!='All'):
@@ -305,7 +310,7 @@ def downloadCSV(request,key):
     response = HttpResponse(content_type='text/csv')
     response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
     writer = csv.writer(response)
-    listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'In Maintenance', 'Out of order', 'Created', 'Last Modified']
+    listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'Repairable', 'Out of order', 'Created', 'Last Modified']
   
     if (obj.extra_fields):
         for key,value in obj.extra_fields.items():
@@ -443,8 +448,7 @@ def editCategoryView(request,key):
     elif len(categoryObj.extra_fields) ==3:
         initialValue1 = categoryObj.extra_fields['field1']
         initialValue2 = categoryObj.extra_fields['field2']
-        initialValue3 = categoryObj.extra_fields['field3']
-    
+        initialValue3 = categoryObj.extra_fields['field3']   
     if request.method == 'POST':
         form = editCategoryForm(data=request.POST,extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)
         if (form.is_valid):
@@ -464,6 +468,8 @@ def editCategoryView(request,key):
                 categoryObj.extra_fields['field1'] = firstKey
                 categoryObj.extra_fields['field2'] = secondKey
                 categoryObj.extra_fields['field3'] = thirdKey
+            
+
            
             categoryObj.save()
             itemObj = Item.objects.filter(category = categoryObj)
@@ -486,7 +492,7 @@ def editCategoryView(request,key):
                 item.save()
               
             messages.success(request, f'Edit Successful!')
-            return redirect('dashboard')
+            return redirect('home')
 
     else:
         form = editCategoryForm(extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)

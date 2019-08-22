@@ -78,6 +78,14 @@ def total_products_count():
 
     return count
 
+@register.simple_tag
+def working_count():
+    count = 0
+    item = Item.objects.all()
+    for obj in item:
+        count += obj.working
+    return count
+
 
 @register.simple_tag
 def out_of_order_count():
@@ -97,3 +105,24 @@ def in_maintenance_count():
         count += obj.in_maintenance
 
     return count
+
+@register.simple_tag
+def total_categories_count():
+    return Categorie.objects.all().count()
+
+@register.simple_tag
+def total_item_type_count():
+    return Item.objects.all().count()
+
+@register.simple_tag
+def working_percentage():
+   return ((working_count() / total_products_count())*100)
+
+
+@register.simple_tag
+def out_of_order_percentage():
+   return ((out_of_order_count() / total_products_count())*100)
+
+@register.simple_tag
+def in_maintenance_percentage():
+   return ((in_maintenance_count() / total_products_count())*100)
