@@ -44,7 +44,7 @@ def add2(request, key):
     if request.method == 'POST':
         addItemform = addItemForm(data=request.POST, extra_fields_dict=categoryObj.extra_fields)
         if (addItemform.is_valid):
-          
+
             addItemform.save()
             obj = Item.objects.latest('created')
             obj.category = categoryObj
@@ -80,7 +80,7 @@ def add2(request, key):
 
             messages.success(request, f'Added Successfully!')
             obj = Item.objects.latest('created')
-          
+
             return redirect('createSubItem',key=obj.id)
 
     else:
@@ -243,7 +243,7 @@ def advancedSearch(request):
         categoryValue = 'All'
         categoryValue = Categorie.objects.order_by('id')[0].category_name
     print(categoryValue)
-    
+
     categoryObj = Categorie.objects.all()       #dropdown list for category section
     floorObj = Floor.objects.all()
     if (floorValue == 'All'):
@@ -251,21 +251,21 @@ def advancedSearch(request):
     else:
         tempFloor = Floor.objects.get(floor = floorValue)
         roomObj = Room.objects.filter(floor = tempFloor)
-        
+
     if (roomValue != 'All'):
         # roomNumber = roomValue.split(':')
         # print(roomValue)
         tempRoomObj = Room.objects.get(room_no = int(roomValue))
-       
+
         # print(floorValue)
-  
+
         if (floorValue!='All') and (int(tempRoomObj.floor.floor) != int(floorValue)):
            roomValue = 'All'
-  
+
     category = Categorie.objects.get(category_name = str(categoryValue))
-  
+
     itemObj = Item.objects.filter(category = category)
- 
+
     if (roomValue == 'All'):
         itemTempObj = itemObj
         count=0
@@ -274,7 +274,7 @@ def advancedSearch(request):
         for instance in roomObj:
             if count == 0:
                 itemObj = itemTempObj.filter(room = instance)
-               
+
             else:
                 itemObj |= itemTempObj.filter(room = instance)
             count = count+1
@@ -290,7 +290,7 @@ def advancedSearch(request):
     Extrafields = []
     if (itemObj):
         tempItem = Item.objects.filter(category = category)[0]
-     
+
         if tempItem:
             for key,value in tempItem.extra_value.items():
                 Extrafields.append(key)
@@ -311,7 +311,7 @@ def downloadCSV(request,key):
     response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
     writer = csv.writer(response)
     listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'Repairable', 'Out of order', 'Created', 'Last Modified']
-  
+
     if (obj.extra_fields):
         for key,value in obj.extra_fields.items():
             listOfFields.append(value)
@@ -322,9 +322,9 @@ def downloadCSV(request,key):
         if (obj.extra_value):
             for key,value in obj.extra_value.items():
                 valueField.append(value)
-        
+
         writer.writerow(valueField)
-    
+
     return response
 
 
@@ -342,11 +342,11 @@ def createSubItem(request,key):
     itemObj = Item.objects.get(pk=key)
     itemName = itemObj.name
     if request.method == 'POST':
-        
+
         form = subItemForm(request.POST)
         if form.is_valid:
             try:
-               
+
                 form.save()
                 obj = SubItem.objects.latest('id')
                 obj.item = itemObj
@@ -440,62 +440,70 @@ def deleteRoom(request):
 @login_required
 def editCategoryView(request,key):
     categoryObj = Categorie.objects.get(pk=key)
-    if len(categoryObj.extra_fields) ==1:
-        initialValue1 = categoryObj.extra_fields['field1']
-    elif len(categoryObj.extra_fields) ==2:
-        initialValue1 = categoryObj.extra_fields['field1']
-        initialValue2 = categoryObj.extra_fields['field2']
-    elif len(categoryObj.extra_fields) ==3:
-        initialValue1 = categoryObj.extra_fields['field1']
-        initialValue2 = categoryObj.extra_fields['field2']
-        initialValue3 = categoryObj.extra_fields['field3']   
+    extra_fields_dict={}
+    try:
+        if len(categoryObj.extra_fields) ==1:
+            initialValue1 = categoryObj.extra_fields['field1']
+        elif len(categoryObj.extra_fields) ==2:
+            initialValue1 = categoryObj.extra_fields['field1']
+            initialValue2 = categoryObj.extra_fields['field2']
+        elif len(categoryObj.extra_fields) ==3:
+            initialValue1 = categoryObj.extra_fields['field1']
+            initialValue2 = categoryObj.extra_fields['field2']
+            initialValue3 = categoryObj.extra_fields['field3']
+        extra_fields_dict=categoryObj.extra_fields
+    except:
+        pass
     if request.method == 'POST':
         form = editCategoryForm(data=request.POST,extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)
         if (form.is_valid):
             form.save()
-            if len(categoryObj.extra_fields) ==1:
-                firstKey = request.POST['field1']
-                categoryObj.extra_fields['field1'] = firstKey
-            elif len(categoryObj.extra_fields) ==2:
-                firstKey = request.POST['field1']
-                secondKey = request.POST['field2']
-                categoryObj.extra_fields['field1'] = firstKey
-                categoryObj.extra_fields['field2'] = secondKey
-            elif len(categoryObj.extra_fields) ==3:
-                firstKey = request.POST['field1']
-                secondKey = request.POST['field2']
-                thirdKey = request.POST['field3']
-                categoryObj.extra_fields['field1'] = firstKey
-                categoryObj.extra_fields['field2'] = secondKey
-                categoryObj.extra_fields['field3'] = thirdKey
-            
-
-           
+            try:
+                if len(categoryObj.extra_fields) ==1:
+                    firstKey = request.POST['field1']
+                    categoryObj.extra_fields['field1'] = firstKey
+                elif len(categoryObj.extra_fields) ==2:
+                    firstKey = request.POST['field1']
+                    secondKey = request.POST['field2']
+                    categoryObj.extra_fields['field1'] = firstKey
+                    categoryObj.extra_fields['field2'] = secondKey
+                elif len(categoryObj.extra_fields) ==3:
+                    firstKey = request.POST['field1']
+                    secondKey = request.POST['field2']
+                    thirdKey = request.POST['field3']
+                    categoryObj.extra_fields['field1'] = firstKey
+                    categoryObj.extra_fields['field2'] = secondKey
+                    categoryObj.extra_fields['field3'] = thirdKey
+            except:
+                pass
             categoryObj.save()
             itemObj = Item.objects.filter(category = categoryObj)
-           
-            for item in itemObj:
-                if len(categoryObj.extra_fields) ==1:
-                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
-                    
-                elif len(categoryObj.extra_fields) ==2:
 
-                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
-                    item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
-                   
-                    
-                elif len(categoryObj.extra_fields) ==3:
-                    
-                    item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
-                    item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
-                    item.extra_value[thirdKey] = item.extra_value.pop(initialValue3)
-                item.save()
-              
+            for item in itemObj:
+                try:
+                    if len(categoryObj.extra_fields) ==1:
+                        item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+
+                    elif len(categoryObj.extra_fields) ==2:
+
+                        item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+                        item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
+
+
+                    elif len(categoryObj.extra_fields) ==3:
+
+                        item.extra_value[firstKey] = item.extra_value.pop(initialValue1)
+                        item.extra_value[secondKey] = item.extra_value.pop(initialValue2)
+                        item.extra_value[thirdKey] = item.extra_value.pop(initialValue3)
+                    item.save()
+                except:
+                    pass
             messages.success(request, f'Edit Successful!')
             return redirect('home')
 
     else:
-        form = editCategoryForm(extra_fields_dict=categoryObj.extra_fields,instance = categoryObj)
+
+        form = editCategoryForm(extra_fields_dict=extra_fields_dict,instance = categoryObj)
     context = {'form':form}
     return render(request,'inventory/editcategory.html',context)
 
@@ -552,10 +560,10 @@ def editSubItem(request,key):
     itemObj = Item.objects.get(pk = subItemObj.item.pk)
 
     if request.method == 'POST':
-        
+
         form = subItemForm(request.POST,instance=subItemObj)
         if form.is_valid:
-            try:   
+            try:
                 form.save()
                 subItemObj.item = itemObj
                 subItemObj.save()
@@ -567,7 +575,7 @@ def editSubItem(request,key):
         form = subItemForm(instance=subItemObj)
     context = {'subItemForm': form,'subitem':subItemObj.name,'item':itemObj.name}
     return render(request,'inventory/editSubItem.html',context)
-        
+
 @login_required
 def addExistingSubItem(request,key):
     subItemObj = SubItem.objects.get(pk=key)

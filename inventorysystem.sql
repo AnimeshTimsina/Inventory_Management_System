@@ -25,7 +25,7 @@ SET default_with_oids = false;
 
 CREATE TABLE public.auth_group (
     id integer NOT NULL,
-    name character varying(150) NOT NULL
+    name character varying(80) NOT NULL
 );
 
 
@@ -325,106 +325,80 @@ CREATE TABLE public.django_session (
 
 
 --
--- Name: inventory_categorie; Type: TABLE; Schema: public; Owner: -
+-- Name: inventory_computer; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.inventory_categorie (
-    id integer NOT NULL,
-    category_name character varying(50) NOT NULL,
-    extra_fields jsonb
-);
-
-
---
--- Name: inventory_categorie_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.inventory_categorie_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: inventory_categorie_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.inventory_categorie_id_seq OWNED BY public.inventory_categorie.id;
-
-
---
--- Name: inventory_floor; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.inventory_floor (
-    id integer NOT NULL,
-    floor smallint NOT NULL,
-    CONSTRAINT inventory_floor_floor_check CHECK ((floor >= 0))
-);
-
-
---
--- Name: inventory_floor_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.inventory_floor_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: inventory_floor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.inventory_floor_id_seq OWNED BY public.inventory_floor.id;
-
-
---
--- Name: inventory_item; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.inventory_item (
-    id integer NOT NULL,
-    name character varying(50) NOT NULL,
-    model character varying(50),
-    cost_per_item numeric(10,2),
-    date_of_acquire date NOT NULL,
-    working integer NOT NULL,
-    in_maintenance integer NOT NULL,
-    out_of_order integer NOT NULL,
+CREATE TABLE public.inventory_computer (
+    id character varying(20) NOT NULL,
+    cost numeric(10,2),
+    status character varying(2) NOT NULL,
     created timestamp with time zone,
     last_modified timestamp with time zone,
-    extra_value jsonb,
-    category_id integer,
-    room_id integer
+    model character varying(50) NOT NULL,
+    name character varying(50) NOT NULL,
+    room_id character varying(20),
+    date_of_acquire date NOT NULL,
+    serial_no character varying(50)
 );
 
 
 --
--- Name: inventory_item_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: inventory_laptop; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.inventory_item_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE TABLE public.inventory_laptop (
+    id character varying(20) NOT NULL,
+    name character varying(50) NOT NULL,
+    model character varying(50) NOT NULL,
+    cost numeric(10,2),
+    status character varying(2) NOT NULL,
+    created timestamp with time zone,
+    last_modified timestamp with time zone,
+    date_of_acquire date NOT NULL,
+    room_id character varying(20),
+    serial_no character varying(50)
+);
 
 
 --
--- Name: inventory_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: inventory_networkswitch; Type: TABLE; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.inventory_item_id_seq OWNED BY public.inventory_item.id;
+CREATE TABLE public.inventory_networkswitch (
+    id character varying(20) NOT NULL,
+    name character varying(50) NOT NULL,
+    model character varying(50) NOT NULL,
+    no_of_ports smallint NOT NULL,
+    cost numeric(10,2),
+    status character varying(2) NOT NULL,
+    created timestamp with time zone,
+    last_modified timestamp with time zone,
+    room_id character varying(20),
+    date_of_acquire date NOT NULL,
+    "no_of_SFP_ports" smallint NOT NULL,
+    serial_no character varying(50),
+    CONSTRAINT "inventory_networkswitch_no_of_SFP_ports_check" CHECK (("no_of_SFP_ports" >= 0)),
+    CONSTRAINT inventory_networkswitch_no_of_ports_check CHECK ((no_of_ports >= 0))
+);
+
+
+--
+-- Name: inventory_printer; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_printer (
+    id character varying(20) NOT NULL,
+    name character varying(50) NOT NULL,
+    model character varying(50) NOT NULL,
+    cost numeric(10,2),
+    status character varying(2) NOT NULL,
+    created timestamp with time zone,
+    last_modified timestamp with time zone,
+    room_id character varying(20),
+    date_of_acquire date NOT NULL,
+    ip_address inet NOT NULL,
+    serial_no character varying(50)
+);
 
 
 --
@@ -432,55 +406,35 @@ ALTER SEQUENCE public.inventory_item_id_seq OWNED BY public.inventory_item.id;
 --
 
 CREATE TABLE public.inventory_room (
-    id integer NOT NULL,
-    room_no smallint NOT NULL,
-    room_name character varying(50) NOT NULL,
-    floor_id integer NOT NULL,
-    CONSTRAINT inventory_room_room_no_check CHECK ((room_no >= 0))
+    id character varying(20) NOT NULL,
+    floor smallint NOT NULL,
+    CONSTRAINT inventory_room_floor_check CHECK ((floor >= 0))
 );
 
 
 --
--- Name: inventory_room_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.inventory_room_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: inventory_room_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.inventory_room_id_seq OWNED BY public.inventory_room.id;
-
-
---
--- Name: inventory_subitem; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.inventory_subitem (
-    id integer NOT NULL,
+CREATE TABLE public.inventory_roomhasadditionalitem (
+    id character varying(20) NOT NULL,
+    last_modified timestamp with time zone,
+    room_id character varying(20),
+    cost numeric(10,2),
+    created timestamp with time zone,
+    date_of_acquire date NOT NULL,
+    model character varying(50) NOT NULL,
     name character varying(50) NOT NULL,
-    model character varying(50),
-    cost_per_item numeric(10,2),
-    working integer NOT NULL,
-    in_maintenance integer NOT NULL,
-    out_of_order integer NOT NULL,
-    item_id integer
+    serial_no character varying(50),
+    status character varying(2) NOT NULL
 );
 
 
 --
--- Name: inventory_subitem_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.inventory_subitem_id_seq
+CREATE SEQUENCE public.inventory_roomhasadditionalitem_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -490,10 +444,10 @@ CREATE SEQUENCE public.inventory_subitem_id_seq
 
 
 --
--- Name: inventory_subitem_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.inventory_subitem_id_seq OWNED BY public.inventory_subitem.id;
+ALTER SEQUENCE public.inventory_roomhasadditionalitem_id_seq OWNED BY public.inventory_roomhasadditionalitem.id;
 
 
 --
@@ -560,38 +514,10 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- Name: inventory_categorie id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_categorie ALTER COLUMN id SET DEFAULT nextval('public.inventory_categorie_id_seq'::regclass);
-
-
---
--- Name: inventory_floor id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_floor ALTER COLUMN id SET DEFAULT nextval('public.inventory_floor_id_seq'::regclass);
-
-
---
--- Name: inventory_item id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_item ALTER COLUMN id SET DEFAULT nextval('public.inventory_item_id_seq'::regclass);
-
-
---
--- Name: inventory_room id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_room ALTER COLUMN id SET DEFAULT nextval('public.inventory_room_id_seq'::regclass);
-
-
---
--- Name: inventory_subitem id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_subitem ALTER COLUMN id SET DEFAULT nextval('public.inventory_subitem_id_seq'::regclass);
+ALTER TABLE ONLY public.inventory_roomhasadditionalitem ALTER COLUMN id SET DEFAULT nextval('public.inventory_roomhasadditionalitem_id_seq'::regclass);
 
 
 --
@@ -633,32 +559,33 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 16	Can add session	6	add_session
 17	Can change session	6	change_session
 18	Can delete session	6	delete_session
-19	Can add categorie	7	add_categorie
-20	Can change categorie	7	change_categorie
-21	Can delete categorie	7	delete_categorie
-22	Can add floor	8	add_floor
-23	Can change floor	8	change_floor
-24	Can delete floor	8	delete_floor
-25	Can add item	9	add_item
-26	Can change item	9	change_item
-27	Can delete item	9	delete_item
-28	Can add room	10	add_room
-29	Can change room	10	change_room
-30	Can delete room	10	delete_room
-31	Can add sub item	11	add_subitem
-32	Can change sub item	11	change_subitem
-33	Can delete sub item	11	delete_subitem
-34	Can view log entry	1	view_logentry
-35	Can view permission	2	view_permission
-36	Can view group	3	view_group
-37	Can view user	4	view_user
-38	Can view content type	5	view_contenttype
-39	Can view session	6	view_session
-40	Can view categorie	7	view_categorie
-41	Can view floor	8	view_floor
-42	Can view item	9	view_item
-43	Can view room	10	view_room
-44	Can view sub item	11	view_subitem
+19	Can add computer	7	add_computer
+20	Can change computer	7	change_computer
+21	Can delete computer	7	delete_computer
+22	Can add printer	8	add_printer
+23	Can change printer	8	change_printer
+24	Can delete printer	8	delete_printer
+25	Can add network switch	9	add_networkswitch
+26	Can change network switch	9	change_networkswitch
+27	Can delete network switch	9	delete_networkswitch
+28	Can add additional item	10	add_additionalitem
+29	Can change additional item	10	change_additionalitem
+30	Can delete additional item	10	delete_additionalitem
+31	Can add room	11	add_room
+32	Can change room	11	change_room
+33	Can delete room	11	delete_room
+34	Can add room has additional item	12	add_roomhasadditionalitem
+35	Can change room has additional item	12	change_roomhasadditionalitem
+36	Can delete room has additional item	12	delete_roomhasadditionalitem
+37	Can add store item name	13	add_storeitemname
+38	Can change store item name	13	change_storeitemname
+39	Can delete store item name	13	delete_storeitemname
+40	Can add store item	14	add_storeitem
+41	Can change store item	14	change_storeitem
+42	Can delete store item	14	delete_storeitem
+43	Can add laptop	15	add_laptop
+44	Can change laptop	15	change_laptop
+45	Can delete laptop	15	delete_laptop
 \.
 
 
@@ -667,7 +594,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$150000$yR8SQCIXf8dg$rtj0sLiNfpworxNXEqjRLOo2NNeUeAhUUIFIyU6M0lA=	2019-08-22 09:16:17.826218+05:45	t	admin				t	t	2019-07-29 21:52:02.087893+05:45
+1	pbkdf2_sha256$100000$ZRxzsykGgQ12$+HlJrJQGJ5HVU2MiHB6R3T2fh5lxtUaeYy2mC7Fe0do=	2019-01-17 15:18:29.891611+05:45	t	animesh			asdasd@gmail.com	t	t	2018-12-24 12:27:46.138388+05:45
 \.
 
 
@@ -692,35 +619,20 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2019-07-29 23:57:51.10612+05:45	4	Test2	3		7	1
-2	2019-07-30 00:04:10.552691+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-3	2019-07-30 00:04:39.350997+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-4	2019-07-30 00:10:59.215655+05:45	115	windows-12ed	2	[]	9	1
-5	2019-07-30 00:11:06.177597+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-6	2019-07-30 00:11:28.972181+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-7	2019-07-30 00:20:17.355187+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-8	2019-07-30 00:20:30.694478+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-9	2019-07-30 00:22:55.795377+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-10	2019-07-30 00:23:02.291042+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-11	2019-07-30 00:24:19.003442+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-12	2019-07-30 00:24:31.299998+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-13	2019-07-30 00:27:53.699842+05:45	5	TestCategorie	2	[{"changed": {"fields": ["extra_fields"]}}]	7	1
-14	2019-07-30 00:28:11.024694+05:45	115	windows-12ed	2	[]	9	1
-15	2019-07-30 00:28:33.503695+05:45	115	windows-12ed	2	[{"changed": {"fields": ["extra_value"]}}]	9	1
-16	2019-07-30 00:36:00.576469+05:45	115	windows-12ed	2	[]	9	1
-17	2019-07-30 12:14:46.913911+05:45	117	TechX-sdsd	3		9	1
-18	2019-07-30 12:15:24.3123+05:45	118	TechX-sdsd	3		9	1
-19	2019-07-30 12:16:30.132084+05:45	120	asbcsnac-Genericascax	3		9	1
-20	2019-07-30 12:16:30.136642+05:45	119	TechX-sdsd	3		9	1
-21	2019-07-30 12:16:30.139697+05:45	116	Tech-12345	3		9	1
-22	2019-07-30 12:24:01.034621+05:45	121	Genericscsa-qwsqGeneric	3		9	1
-23	2019-07-30 12:36:45.314147+05:45	122	acsa-Genericgfsda	3		9	1
-24	2019-08-18 14:44:42.76992+05:45	10	here is	3		7	1
-25	2019-08-18 14:44:42.778133+05:45	9	lab furniture	3		7	1
-26	2019-08-18 14:46:39.196381+05:45	11	kit of mine	3		7	1
-27	2019-08-22 14:34:05.320295+05:45	1	Others1	2	[{"changed": {"fields": ["category_name"]}}]	7	1
-28	2019-08-22 14:34:34.909252+05:45	20	Others	3		7	1
-29	2019-08-22 14:34:42.954371+05:45	1	Others	2	[{"changed": {"fields": ["category_name"]}}]	7	1
+1	2018-12-24 12:37:33.501752+05:45	1	1	1	[{"added": {}}]	11	1
+2	2018-12-24 12:37:36.518541+05:45	1	1-Generic-Generic	1	[{"added": {}}]	7	1
+3	2018-12-24 12:37:56.699878+05:45	2	2-Generic-Generic	1	[{"added": {}}]	7	1
+4	2018-12-24 12:38:05.045848+05:45	2	2	1	[{"added": {}}]	11	1
+5	2018-12-24 12:38:11.971424+05:45	3	3	1	[{"added": {}}]	11	1
+6	2018-12-24 12:38:45.312256+05:45	3	3-Dell-2233	1	[{"added": {}}]	7	1
+7	2018-12-24 12:39:10.272256+05:45	4	4-Asus-7dy7ad	1	[{"added": {}}]	7	1
+8	2018-12-24 12:39:41.762493+05:45	8	8-Apple-Macbook	1	[{"added": {}}]	15	1
+9	2018-12-24 12:40:48.800693+05:45	33	Earphone - 33	1	[{"added": {}}]	10	1
+10	2018-12-24 12:40:55.831682+05:45	1	2 - Earphone	1	[{"added": {}}]	12	1
+11	2019-01-17 15:19:47.300612+05:45	4	4	1	[{"added": {}}]	11	1
+12	2019-01-17 15:20:47.575118+05:45	500	500-Zebra-Generic	1	[{"added": {}}]	12	1
+13	2019-01-17 15:21:05.087981+05:45	99999	99999-adsa-asda	1	[{"added": {}}]	12	1
+14	2019-01-17 15:23:42.010834+05:45	7777123	7777123-Zebra-Generic	1	[{"added": {}}]	12	1
 \.
 
 
@@ -735,11 +647,15 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 4	auth	user
 5	contenttypes	contenttype
 6	sessions	session
-7	inventory	categorie
-8	inventory	floor
-9	inventory	item
-10	inventory	room
-11	inventory	subitem
+7	inventory	computer
+8	inventory	printer
+9	inventory	networkswitch
+10	inventory	additionalitem
+11	inventory	room
+12	inventory	roomhasadditionalitem
+13	inventory	storeitemname
+14	inventory	storeitem
+15	inventory	laptop
 \.
 
 
@@ -748,25 +664,36 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2019-07-29 21:51:37.371385+05:45
-2	auth	0001_initial	2019-07-29 21:51:37.488993+05:45
-3	admin	0001_initial	2019-07-29 21:51:37.530425+05:45
-4	admin	0002_logentry_remove_auto_add	2019-07-29 21:51:37.542762+05:45
-5	contenttypes	0002_remove_content_type_name	2019-07-29 21:51:37.578919+05:45
-6	auth	0002_alter_permission_name_max_length	2019-07-29 21:51:37.590287+05:45
-7	auth	0003_alter_user_email_max_length	2019-07-29 21:51:37.608806+05:45
-8	auth	0004_alter_user_username_opts	2019-07-29 21:51:37.628434+05:45
-9	auth	0005_alter_user_last_login_null	2019-07-29 21:51:37.649815+05:45
-10	auth	0006_require_contenttypes_0002	2019-07-29 21:51:37.653414+05:45
-11	auth	0007_alter_validators_add_error_messages	2019-07-29 21:51:37.670548+05:45
-12	auth	0008_alter_user_username_max_length	2019-07-29 21:51:37.706034+05:45
-13	auth	0009_alter_user_last_name_max_length	2019-07-29 21:51:37.737944+05:45
-14	inventory	0001_initial	2019-07-29 21:51:37.830512+05:45
-15	sessions	0001_initial	2019-07-29 21:51:37.849964+05:45
-16	admin	0003_logentry_add_action_flag_choices	2019-08-02 12:57:37.997086+05:45
-17	auth	0010_alter_group_name_max_length	2019-08-02 12:57:38.113699+05:45
-18	auth	0011_update_proxy_permissions	2019-08-02 12:57:38.13138+05:45
-19	inventory	0002_auto_20190818_0914	2019-08-18 14:59:55.399133+05:45
+1	contenttypes	0001_initial	2018-12-24 12:26:41.421665+05:45
+2	auth	0001_initial	2018-12-24 12:26:41.552522+05:45
+3	admin	0001_initial	2018-12-24 12:26:41.593388+05:45
+4	admin	0002_logentry_remove_auto_add	2018-12-24 12:26:41.605443+05:45
+5	contenttypes	0002_remove_content_type_name	2018-12-24 12:26:41.634077+05:45
+6	auth	0002_alter_permission_name_max_length	2018-12-24 12:26:41.644869+05:45
+7	auth	0003_alter_user_email_max_length	2018-12-24 12:26:41.659099+05:45
+8	auth	0004_alter_user_username_opts	2018-12-24 12:26:41.67621+05:45
+9	auth	0005_alter_user_last_login_null	2018-12-24 12:26:41.694602+05:45
+10	auth	0006_require_contenttypes_0002	2018-12-24 12:26:41.698279+05:45
+11	auth	0007_alter_validators_add_error_messages	2018-12-24 12:26:41.712106+05:45
+12	auth	0008_alter_user_username_max_length	2018-12-24 12:26:41.735574+05:45
+13	auth	0009_alter_user_last_name_max_length	2018-12-24 12:26:41.75149+05:45
+14	inventory	0001_initial	2018-12-24 12:26:41.766166+05:45
+15	inventory	0002_auto_20180717_0427	2018-12-24 12:26:41.77246+05:45
+16	inventory	0003_auto_20180717_0428	2018-12-24 12:26:41.778147+05:45
+17	inventory	0004_auto_20180717_0441	2018-12-24 12:26:41.79647+05:45
+18	inventory	0005_auto_20180717_0443	2018-12-24 12:26:41.821319+05:45
+19	inventory	0006_printer	2018-12-24 12:26:41.835524+05:45
+20	inventory	0007_networkswitch	2018-12-24 12:26:41.851269+05:45
+21	inventory	0008_auto_20180717_1650	2018-12-24 12:26:41.902865+05:45
+22	inventory	0009_storeitem_storeitemname	2018-12-24 12:26:41.925335+05:45
+23	inventory	0010_auto_20180722_0917	2018-12-24 12:26:41.937785+05:45
+24	inventory	0011_auto_20180722_0921	2018-12-24 12:26:41.960227+05:45
+25	inventory	0012_computer_room	2018-12-24 12:26:41.978514+05:45
+26	inventory	0013_auto_20180817_0912	2018-12-24 12:26:42.017312+05:45
+27	inventory	0014_auto_20180817_0928	2018-12-24 12:26:42.239738+05:45
+28	inventory	0015_auto_20180917_1824	2018-12-24 12:26:42.331232+05:45
+29	sessions	0001_initial	2018-12-24 12:26:42.352422+05:45
+30	inventory	0016_auto_20190117_1518	2019-01-17 15:18:14.450177+05:45
 \.
 
 
@@ -775,164 +702,48 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-uuejz94mc5xqsgqg3wrbtb2yc6o9fhgt	OTQ3ZjA3YzgxYjNlYmY1YTQyNjU2NzRmYmVhMDU5YzNjMzk0MTI2NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwNjExMDY2YTU2MDI1ZjNkNDg5YmFjOWM1NGJkYmIzZjRiNjJkOGEyIn0=	2019-08-16 13:03:29.47332+05:45
-c2uhwhtxngpdlwd4a2ftuiv0aj4ad5kc	OTQ3ZjA3YzgxYjNlYmY1YTQyNjU2NzRmYmVhMDU5YzNjMzk0MTI2NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwNjExMDY2YTU2MDI1ZjNkNDg5YmFjOWM1NGJkYmIzZjRiNjJkOGEyIn0=	2019-08-27 15:55:40.311241+05:45
-6b5xy8j13he9r93y7bxa6m9azi1vebz0	OTQ3ZjA3YzgxYjNlYmY1YTQyNjU2NzRmYmVhMDU5YzNjMzk0MTI2NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwNjExMDY2YTU2MDI1ZjNkNDg5YmFjOWM1NGJkYmIzZjRiNjJkOGEyIn0=	2019-09-01 12:08:07.026084+05:45
-2dhjadirmxkkyydk9b1g5q0l6bfxhisk	OTQ3ZjA3YzgxYjNlYmY1YTQyNjU2NzRmYmVhMDU5YzNjMzk0MTI2NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwNjExMDY2YTU2MDI1ZjNkNDg5YmFjOWM1NGJkYmIzZjRiNjJkOGEyIn0=	2019-09-01 14:44:34.961003+05:45
-8gyxsq0lkj7q4u4woltkmuam47ivzdt9	OTQ3ZjA3YzgxYjNlYmY1YTQyNjU2NzRmYmVhMDU5YzNjMzk0MTI2NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwNjExMDY2YTU2MDI1ZjNkNDg5YmFjOWM1NGJkYmIzZjRiNjJkOGEyIn0=	2019-09-05 09:16:17.839559+05:45
+bmlv0020p09rd9q64v2c7sv0ep3m5g1p	ZTExZjU0YzBlOTYxNDY5ZGIyZTZiMmIzOWFhZTEyYjgyMzUzM2UwMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MWU0YzA4NGEyOTFkMjgyM2RjOTUzMGViMDNkNWQ1MDZmODNlYTVlIn0=	2019-01-07 12:43:46.553353+05:45
+48hrxl9mn5rs6dp8wdz62l9mvolb6gvu	ZTExZjU0YzBlOTYxNDY5ZGIyZTZiMmIzOWFhZTEyYjgyMzUzM2UwMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MWU0YzA4NGEyOTFkMjgyM2RjOTUzMGViMDNkNWQ1MDZmODNlYTVlIn0=	2019-01-19 15:38:34.740779+05:45
+qxzsqyh2u83j1x67xcpy8xnal71d3dwo	ZTExZjU0YzBlOTYxNDY5ZGIyZTZiMmIzOWFhZTEyYjgyMzUzM2UwMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MWU0YzA4NGEyOTFkMjgyM2RjOTUzMGViMDNkNWQ1MDZmODNlYTVlIn0=	2019-01-20 18:25:01.973486+05:45
+7duxe92o5hjhqgbrslsdiuwa3p6tw1vm	ZTExZjU0YzBlOTYxNDY5ZGIyZTZiMmIzOWFhZTEyYjgyMzUzM2UwMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MWU0YzA4NGEyOTFkMjgyM2RjOTUzMGViMDNkNWQ1MDZmODNlYTVlIn0=	2019-01-31 14:22:33.460482+05:45
+rnkzqfq0lxp7sl7lvfoxw4t6exbqw7f3	ZTExZjU0YzBlOTYxNDY5ZGIyZTZiMmIzOWFhZTEyYjgyMzUzM2UwMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MWU0YzA4NGEyOTFkMjgyM2RjOTUzMGViMDNkNWQ1MDZmODNlYTVlIn0=	2019-01-31 15:18:29.895423+05:45
 \.
 
 
 --
--- Data for Name: inventory_categorie; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: inventory_computer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.inventory_categorie (id, category_name, extra_fields) FROM stdin;
-3	TrainerKit	{}
-1	Others	{}
-14	Computer	\N
-15	Monitor	\N
-16	Multimeter	\N
-17	oscilloscope	\N
-18	Lab_furniture_and_accessories	\N
-19	Projector	\N
-21	Telephone	\N
+COPY public.inventory_computer (id, cost, status, created, last_modified, model, name, room_id, date_of_acquire, serial_no) FROM stdin;
+1	50000.00	WK	2018-12-24 12:37:36.516798+05:45	2018-12-24 12:37:36.51683+05:45	Generic	Generic	1	2018-12-24	1
+2	100000.00	WK	2018-12-24 12:37:56.699043+05:45	2018-12-24 12:37:56.699062+05:45	Generic	Generic	1	2018-12-24	2
+3	34444.00	OO	2018-12-24 12:38:45.311378+05:45	2018-12-24 12:38:45.311401+05:45	2233	Dell	2	2018-12-24	32
+4	77777.00	IM	2018-12-24 12:39:10.271134+05:45	2018-12-24 12:39:10.271171+05:45	7dy7ad	Asus	3	2018-12-24	789
 \.
 
 
 --
--- Data for Name: inventory_floor; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: inventory_laptop; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.inventory_floor (id, floor) FROM stdin;
-1	0
-4	69
+COPY public.inventory_laptop (id, name, model, cost, status, created, last_modified, date_of_acquire, room_id, serial_no) FROM stdin;
+8	Apple	Macbook	200000.00	WK	2018-12-24 12:39:41.761088+05:45	2018-12-24 12:39:41.76111+05:45	2018-12-24	\N	23423
 \.
 
 
 --
--- Data for Name: inventory_item; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: inventory_networkswitch; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.inventory_item (id, name, model, cost_per_item, date_of_acquire, working, in_maintenance, out_of_order, created, last_modified, extra_value, category_id, room_id) FROM stdin;
-3	Lab Table	\N	\N	2019-07-26	8	0	0	2019-07-26 07:19:37.994+05:45	2019-08-22 14:14:38.92028+05:45	{}	18	1
-33	Experiment Table		\N	2019-07-26	6	0	0	2019-07-26 09:14:19.537+05:45	2019-08-22 14:14:38.925369+05:45	{}	18	4
-34	Office Table	wooden	\N	2019-07-26	1	0	0	2019-07-26 09:14:19.54+05:45	2019-08-22 14:14:38.929886+05:45	{}	18	4
-41	Experiment Table	wooden	\N	2019-07-26	12	0	12	2019-07-26 09:26:04.422+05:45	2019-08-22 14:14:38.933829+05:45	{}	18	7
-48	Table		\N	2019-07-26	23	0	0	2019-07-26 09:57:19.627+05:45	2019-08-22 14:14:38.938569+05:45	{}	18	6
-47	Office Chair		\N	2019-07-26	1	0	0	2019-07-26 09:57:19.623+05:45	2019-08-22 14:14:53.22131+05:45	{}	18	6
-35	Cupboard common	Steel	\N	2019-07-26	1	0	0	2019-07-26 09:14:19.543+05:45	2019-08-22 14:15:58.327938+05:45	{}	18	4
-43	Cupboard Common	steel	\N	2019-07-26	1	0	1	2019-07-26 09:26:04.43+05:45	2019-08-22 14:15:58.332869+05:45	{}	18	7
-50	White Board		\N	2019-07-26	1	0	0	2019-07-26 09:57:19.675+05:45	2019-08-22 14:16:19.277966+05:45	{}	18	6
-42	Stool		\N	2019-07-26	24	0	24	2019-07-26 09:26:04.427+05:45	2019-08-22 14:17:33.482127+05:45	{}	18	7
-49	Stool		\N	2019-07-26	25	0	0	2019-07-26 09:57:19.671+05:45	2019-08-22 14:17:33.487746+05:45	{}	18	6
-37	Telephone internal	Alcatel	\N	2019-07-26	1	0	0	2019-07-26 09:14:19.549+05:45	2019-08-22 14:20:49.366976+05:45	{}	21	4
-73	Telephone Set	FeTAp 792-1	\N	2019-07-28	2	0	0	2019-07-28 13:54:56.283+05:45	2019-08-22 14:20:49.372028+05:45	{}	21	3
-62	Analog Communication Trainer Kit	ED 2960	\N	2019-07-26	6	0	0	2019-07-26 15:53:01.286+05:45	2019-08-22 14:21:37.585375+05:45	{}	3	3
-2	Steel Cabinet	\N	\N	2019-07-26	9	0	0	2019-07-26 07:19:18.443+05:45	2019-08-22 14:24:10.219386+05:45	{}	1	1
-6	AVOMETER 8	Generic	\N	2019-07-26	11	0	0	2019-07-26 07:24:42.669+05:45	2019-08-22 14:24:10.221878+05:45	{}	1	1
-30	Digital Electronics Trainer Kit	LTB-825	\N	2019-07-26	6	0	0	2019-07-26 09:14:19.527+05:45	2019-08-22 14:21:37.589771+05:45	{}	3	4
-21	Oscilloscope Hameg 30MHz	HM303-3	\N	2019-07-26	2	0	0	2019-07-26 07:42:14.292+05:45	2019-08-22 14:13:55.27118+05:45	{}	17	1
-9	Decade Capacitance Box	IET HACS-Z Series	\N	2019-07-26	12	0	0	2019-07-26 07:28:30.185+05:45	2019-08-22 14:24:10.224211+05:45	{}	1	1
-13	Protek A432 Multimeter		\N	2019-07-26	9	0	0	2019-07-26 07:42:14.267+05:45	2019-08-22 14:12:23.02279+05:45	{}	16	1
-10	Decade Resistance box X 5 upto 1 MOhm	IFT	\N	2019-07-26	12	0	0	2019-07-26 07:42:14.25+05:45	2019-08-22 14:24:10.226933+05:45	{}	1	1
-11	Decade Resistance box x 4 upto 100Ohm	IFT	\N	2019-07-26	12	0	0	2019-07-26 07:42:14.256+05:45	2019-08-22 14:24:10.231058+05:45	{}	1	1
-12	CA 401 AMP Meter		\N	2019-07-26	7	0	0	2019-07-26 07:42:14.261+05:45	2019-08-22 14:24:10.233463+05:45	{}	1	1
-14	Escoro Single Source 0: 30V Power Supply		\N	2019-07-26	1	0	0	2019-07-26 07:42:14.27+05:45	2019-08-22 14:24:10.236217+05:45	{}	1	1
-19	HP Digital Multimeter	34401A	\N	2019-07-26	12	0	0	2019-07-26 07:42:14.286+05:45	2019-08-22 14:12:23.0292+05:45	{}	16	1
-15	Autonix Power Supply		\N	2019-07-26	1	0	0	2019-07-26 07:42:14.274+05:45	2019-08-22 14:24:10.238763+05:45	{}	1	1
-16	Function Generator 5132 Philips		\N	2019-07-26	12	0	0	2019-07-26 07:42:14.277+05:45	2019-08-22 14:24:10.241797+05:45	{}	1	1
-17	Protoboard		\N	2019-07-26	11	0	0	2019-07-26 07:42:14.28+05:45	2019-08-22 14:24:10.24505+05:45	{}	1	1
-18	Pulse Generator Philips	PM5705	\N	2019-07-26	12	0	0	2019-07-26 07:42:14.283+05:45	2019-08-22 14:24:10.248248+05:45	{}	1	1
-20	Fluke/Philips RLC	PM6303A	\N	2019-07-26	1	0	0	2019-07-26 07:42:14.289+05:45	2019-08-22 14:24:10.251053+05:45	{}	1	1
-26	Hitachi Multimedia Projector		\N	2019-07-26	1	0	0	2019-07-26 07:42:14.309+05:45	2019-08-22 14:13:02.202255+05:45	{}	19	1
-22	BK Precision Circuit Analyser		\N	2019-07-26	2	0	0	2019-07-26 07:42:14.296+05:45	2019-08-22 14:24:10.254156+05:45	{}	1	1
-31	HP Oscilloscope 100 MHz	54600 B	\N	2019-07-26	6	0	0	2019-07-26 09:14:19.53+05:45	2019-08-22 14:13:55.275633+05:45	{}	17	4
-23	Curve Tracer	HM 8042	\N	2019-07-26	2	0	0	2019-07-26 07:42:14.299+05:45	2019-08-22 14:24:10.257035+05:45	{}	1	1
-24	Dual Output Power Supply M.N	TW-5050D	\N	2019-07-26	6	0	0	2019-07-26 07:42:14.303+05:45	2019-08-22 14:24:10.260386+05:45	{}	1	1
-27	Belmerit MT 100 all in one	MT-100	\N	2019-07-26	6	0	0	2019-07-26 09:14:19.509+05:45	2019-08-22 14:24:10.265048+05:45	{}	1	4
-46	NEC Monitor	L190NU	\N	2019-07-26	24	0	0	2019-07-26 09:57:19.619+05:45	2019-08-22 14:11:54.402304+05:45	{}	15	6
-44	Projector Screen		\N	2019-07-26	1	0	1	2019-07-26 09:26:04.433+05:45	2019-08-22 14:13:02.207913+05:45	{}	19	7
-29	OP amp Kit- local made		\N	2019-07-26	6	0	0	2019-07-26 09:14:19.523+05:45	2019-08-22 14:24:10.267925+05:45	{}	1	4
-32	Proto Tool Box		\N	2019-07-26	1	0	0	2019-07-26 09:14:19.533+05:45	2019-08-22 14:24:10.271104+05:45	{}	1	4
-88	Microwave Trainer Kit	ED 3000	\N	2019-07-28	6	0	0	2019-07-28 13:54:56.359+05:45	2019-08-22 14:21:37.593825+05:45	{}	3	3
-1	Hampden toolbox	\N	\N	2019-07-26	1	0	0	2019-07-26 07:18:53.957+05:45	2019-08-22 14:24:10.216889+05:45	{}	1	1
-36	Student Bag case	Steel	\N	2019-07-26	1	0	0	2019-07-26 09:14:19.546+05:45	2019-08-22 14:24:10.273734+05:45	{}	1	4
-38	Star Plus Battery 150Ah		\N	2019-07-26	4	0	0	2019-07-26 09:14:19.551+05:45	2019-08-22 14:24:10.276536+05:45	{}	1	4
-39	Inverter D Sine 03K5		\N	2019-07-26	1	0	0	2019-07-26 09:14:19.555+05:45	2019-08-22 14:24:10.28014+05:45	{}	1	4
-40	Student Bag case	steel	\N	2019-07-26	1	0	1	2019-07-26 09:26:04.414+05:45	2019-08-22 14:24:10.282503+05:45	{}	1	7
-45	NEC CPU	MG33LBZEEDVFSBZ	\N	2019-07-26	24	0	0	2019-07-26 09:57:19.613+05:45	2019-08-22 14:24:10.285115+05:45	{}	1	6
-72	Answering Machine	Panasonic KX-T1000	\N	2019-07-28	1	0	0	2019-07-28 13:54:56.231+05:45	2019-08-22 14:24:10.287847+05:45	{}	1	3
-74	Air Cooler	Daikin	\N	2019-07-28	1	0	0	2019-07-28 13:54:56.29+05:45	2019-08-22 14:24:10.290665+05:45	{}	1	3
-75	Steel Cabinet		\N	2019-07-28	11	0	0	2019-07-28 13:54:56.295+05:45	2019-08-22 14:24:10.293829+05:45	{}	1	3
-76	Tool Box		\N	2019-07-28	1	0	0	2019-07-28 13:54:56.301+05:45	2019-08-22 14:24:10.297698+05:45	{}	1	3
-77	Power Supply Module	ED 2900	\N	2019-07-28	6	0	0	2019-07-28 13:54:56.306+05:45	2019-08-22 14:24:10.300356+05:45	{}	1	3
-79	Bel-Merit-All in One Instrument	MT-100	\N	2019-07-28	5	0	0	2019-07-28 13:54:56.314+05:45	2019-08-22 14:24:10.303154+05:45	{}	1	3
-80	Function Generator	TCE 7708	\N	2019-07-28	5	0	0	2019-07-28 13:54:56.321+05:45	2019-08-22 14:24:10.306207+05:45	{}	1	3
-5	Hameg Analogue Oscilloscope 60MHz	HM605	\N	2019-07-26	7	0	0	2019-07-26 07:24:08.572+05:45	2019-08-22 14:13:55.265533+05:45	{}	17	1
-81	Project Board with Power Supply	Breadboards	\N	2019-07-28	6	0	0	2019-07-28 13:54:56.327+05:45	2019-08-22 14:24:10.309157+05:45	{}	1	3
-7	Sympson multimeter 260	\N	\N	2019-07-26	11	0	0	2019-07-26 07:25:15.618+05:45	2019-08-22 14:12:23.017264+05:45	{}	16	1
-82	Audio Generator	LEADER LAG 26	\N	2019-07-28	4	0	0	2019-07-28 13:54:56.332+05:45	2019-08-22 14:24:10.312401+05:45	{}	1	3
-83	Sweep Function Generator(10MHz)	BK Precision 4017	\N	2019-07-28	3	0	0	2019-07-28 13:54:56.336+05:45	2019-08-22 14:24:10.315582+05:45	{}	1	3
-84	RT Signal Generator	BK Precision 2005A	\N	2019-07-28	3	0	0	2019-07-28 13:54:56.343+05:45	2019-08-22 14:24:10.318136+05:45	{}	1	3
-85	EMI Test Receiver	Rhode & Swartz ESHS 10	\N	2019-07-28	1	0	0	2019-07-28 13:54:56.347+05:45	2019-08-22 14:24:10.320771+05:45	{}	1	3
-86	Loop Antenna(Rhode & Schwarz)	HFH2-Z2-335.171132	\N	2019-07-28	1	0	0	2019-07-28 13:54:56.351+05:45	2019-08-22 14:24:10.323588+05:45	{}	1	3
-87	Tripod for Loop Antenna(Rhode & Schwarz)		\N	2019-07-28	1	0	0	2019-07-28 13:54:56.355+05:45	2019-08-22 14:24:10.326204+05:45	{}	1	3
-89	SWR Meter	SWR 3002	\N	2019-07-28	6	0	0	2019-07-28 13:54:56.363+05:45	2019-08-22 14:24:10.329869+05:45	{}	1	3
-25	Computer set NEC		\N	2019-07-26	1	0	0	2019-07-26 07:42:14.306+05:45	2019-08-22 14:10:49.84838+05:45	{}	14	1
-103	Experiment Lab Table		\N	2019-07-28	8	0	0	2019-07-28 14:04:21.514+05:45	2019-08-22 14:14:38.942485+05:45	{}	18	3
-105	Officer Table		\N	2019-07-28	2	0	0	2019-07-28 14:04:21.52+05:45	2019-08-22 14:14:38.946336+05:45	{}	18	3
-107	Table Lamp Set	Naska Leris	\N	2019-07-28	8	0	0	2019-07-28 14:04:21.527+05:45	2019-08-22 14:14:38.949698+05:45	{}	18	3
-4	Office Table	\N	\N	2019-07-26	1	0	0	2019-07-26 07:19:56.198+05:45	2019-08-22 14:14:38.953601+05:45	{}	18	1
-148	Table Vice		\N	2019-08-22	1	0	0	2019-08-22 13:32:52.591112+05:45	2019-08-22 14:14:38.957354+05:45	{}	18	5
-152	Student Work Table	Wooden	\N	2019-08-22	24	0	0	2019-08-22 13:32:52.601409+05:45	2019-08-22 14:14:38.961203+05:45	{}	18	5
-97	Fiber Optic Trainer transmitter	E15T	\N	2019-07-28	6	0	0	2019-07-28 14:04:21.496+05:45	2019-08-22 14:24:10.341686+05:45	{}	1	3
-99	Temperature Controlled Chamber	Tenney	\N	2019-07-28	1	0	0	2019-07-28 14:04:21.502+05:45	2019-08-22 14:24:10.345151+05:45	{}	1	3
-101	HF Power Meter	PM3001	\N	2019-07-28	6	0	0	2019-07-28 14:04:21.508+05:45	2019-08-22 14:24:10.347533+05:45	{}	1	3
-8	Universal Counter	5315A	\N	2019-07-26	6	0	0	2019-07-26 07:25:56.412+05:45	2019-08-22 14:24:10.362787+05:45	{}	1	1
-153	Student Table	Wooden	\N	2019-08-22	12	0	0	2019-08-22 13:32:52.60433+05:45	2019-08-22 14:14:38.96503+05:45	{}	18	5
-135	Table (Computer lab)	\N	\N	2019-08-22	12	0	0	2019-08-22 13:07:52.087606+05:45	2019-08-22 14:14:38.968902+05:45	{}	18	2
-106	Office Chair		\N	2019-07-28	1	0	0	2019-07-28 14:04:21.523+05:45	2019-08-22 14:14:53.226348+05:45	{}	18	3
-130	chair	steek	\N	2019-08-18	25	0	0	2019-08-18 14:14:06.851298+05:45	2019-08-22 14:14:53.231007+05:45	{}	18	1
-134	Chairs	\N	\N	2019-08-22	28	0	0	2019-08-22 13:07:11.047801+05:45	2019-08-22 14:14:53.234769+05:45	{}	18	2
-154	Student Chair	Wooden	\N	2019-08-22	36	0	0	2019-08-22 13:32:52.607355+05:45	2019-08-22 14:14:53.238477+05:45	{}	18	5
-149	Cupboard Common	Steel	\N	2019-08-22	7	0	0	2019-08-22 13:32:52.59381+05:45	2019-08-22 14:15:58.337047+05:45	{}	18	5
-136	White Board	\N	\N	2019-08-22	1	0	0	2019-08-22 13:08:14.685475+05:45	2019-08-22 14:16:19.283143+05:45	{}	18	2
-155	White Board	Wooden	\N	2019-08-22	1	0	0	2019-08-22 13:32:52.610553+05:45	2019-08-22 14:16:19.287764+05:45	{}	18	5
-104	Stool		\N	2019-07-28	24	0	0	2019-07-28 14:04:21.517+05:45	2019-08-22 14:17:33.491634+05:45	{}	18	3
-78	Hewlett Packard Oscilloscope(100MHz)	HP 54600B	\N	2019-07-28	5	0	0	2019-07-28 13:54:56.31+05:45	2019-08-22 14:13:55.280128+05:45	{}	17	3
-151	Steel Bookcase		\N	2019-08-22	1	0	0	2019-08-22 13:32:52.598851+05:45	2019-08-22 14:18:40.643911+05:45	{}	18	5
-150	Rack Pigeon hole	Steel	\N	2019-08-22	2	0	0	2019-08-22 13:32:52.59629+05:45	2019-08-22 14:19:32.116621+05:45	{}	18	5
-138	Telephone Set	\N	\N	2019-08-22	1	0	0	2019-08-22 13:09:08.037029+05:45	2019-08-22 14:20:49.380201+05:45	{}	21	2
-108	Telephone Set	Mitel Sunerset 410	\N	2019-07-28	3	0	0	2019-07-28 14:04:21.53+05:45	2019-08-22 14:20:49.384077+05:45	{}	21	3
-139	Air Condition	\N	\N	2019-08-22	1	0	0	2019-08-22 13:09:54.117601+05:45	2019-08-22 14:24:10.365668+05:45	{}	1	2
-109	Telephone Set	Premier 2500	\N	2019-07-28	7	0	0	2019-07-28 14:04:21.533+05:45	2019-08-22 14:20:49.387513+05:45	{}	21	3
-111	Digital Communication Trainer Kit	ED 2970	\N	2019-07-28	6	0	0	2019-07-28 14:07:08.054+05:45	2019-08-22 14:21:37.597702+05:45	{}	3	3
-112	Analog Communication Trainer Kit	ED 2950	\N	2019-07-28	6	0	0	2019-07-28 14:07:34.322+05:45	2019-08-22 14:21:37.601237+05:45	{}	3	3
-93	25 MHz Dual Trace Oscilloscope	Bel Merit 3304	\N	2019-07-28	1	0	0	2019-07-28 13:54:56.379+05:45	2019-08-22 14:13:55.28449+05:45	{}	17	3
-110	Telephone Exchange Trainer Kit	TPS 7.1.7 Keybold Telephone Technology	\N	2019-07-28	1	0	0	2019-07-28 14:06:21.87+05:45	2019-08-22 14:21:37.605253+05:45	{}	3	3
-94	Trainer Antenna Kit	E15 D	\N	2019-07-28	4	0	0	2019-07-28 13:54:56.385+05:45	2019-08-22 14:24:10.333005+05:45	{}	1	3
-95	Advance Antenna Unit	E15L	\N	2019-07-28	1	0	0	2019-07-28 14:04:21.487+05:45	2019-08-22 14:24:10.336003+05:45	{}	1	3
-137	Steel Cabinet	\N	\N	2019-08-22	1	0	0	2019-08-22 13:08:36.323012+05:45	2019-08-22 14:24:10.36802+05:45	{}	1	2
-96	Fiber Optic Trainer Receiver	E15T	\N	2019-07-28	6	0	0	2019-07-28 14:04:21.493+05:45	2019-08-22 14:24:10.338858+05:45	{}	1	3
-102	Vernier Calliper		\N	2019-07-28	6	0	0	2019-07-28 14:04:21.511+05:45	2019-08-22 14:24:10.350281+05:45	{}	1	3
-28	Discrete Component Kit	Tesca-36185	\N	2019-07-26	4	0	0	2019-07-26 09:14:19.519+05:45	2019-08-22 14:24:10.353078+05:45	{}	1	4
-143	Function Generator	TC37708	\N	2019-08-22	2	0	0	2019-08-22 13:32:52.577738+05:45	2019-08-22 14:24:10.370778+05:45	{}	1	5
-90	Universal Counter	BK PRECESSION 1823	\N	2019-07-28	3	0	0	2019-07-28 13:54:56.367+05:45	2019-08-22 14:24:10.356172+05:45	{}	1	3
-91	Spectrum Analyzer	Protek-P 7802	\N	2019-07-28	3	0	0	2019-07-28 13:54:56.371+05:45	2019-08-22 14:24:10.35921+05:45	{}	1	3
-145	Proto Board		\N	2019-08-22	11	0	0	2019-08-22 13:32:52.583293+05:45	2019-08-22 14:24:10.373407+05:45	{}	1	5
-146	Drill Machine		\N	2019-08-22	1	0	0	2019-08-22 13:32:52.585925+05:45	2019-08-22 14:24:10.375938+05:45	{}	1	5
-147	Grinder Machine		\N	2019-08-22	1	0	0	2019-08-22 13:32:52.588512+05:45	2019-08-22 14:24:10.378858+05:45	{}	1	5
-144	Dual Power Supply	TW5050D	\N	2019-08-22	0	0	3	2019-08-22 13:32:52.580397+05:45	2019-08-22 14:24:10.381243+05:45	{}	1	5
-142	Digital Oscilloscope	54600B	\N	2019-08-22	4	0	0	2019-08-22 13:32:52.574558+05:45	2019-08-22 14:13:55.287982+05:45	{}	17	5
-98	Digital Multimeter	Keithley 195A	\N	2019-07-28	1	0	0	2019-07-28 14:04:21.5+05:45	2019-08-22 14:12:23.034372+05:45	{}	16	3
-92	True RMS Multimeter	BK precisson 2833	\N	2019-07-28	3	0	0	2019-07-28 13:54:56.374+05:45	2019-08-22 14:12:23.039772+05:45	{}	16	3
-140	Fluke 19 Digital Multimeter		\N	2019-08-22	5	0	0	2019-08-22 13:32:52.562418+05:45	2019-08-22 14:12:23.044942+05:45	{}	16	5
-141	Sanwa 400 Digital Multimeter		\N	2019-08-22	4	0	0	2019-08-22 13:32:52.571215+05:45	2019-08-22 14:12:23.050415+05:45	{}	16	5
-100	Projector Screen		\N	2019-07-28	1	0	0	2019-07-28 14:04:21.506+05:45	2019-08-22 14:13:02.214392+05:45	{}	19	3
-131	Computer(i3,540@3GHZ,2GB RAM,320GBHDD )	\N	\N	2019-08-22	25	0	0	2019-08-22 13:05:33.760556+05:45	2019-08-22 14:10:49.85563+05:45	{}	14	2
-132	ACER 15" LCD Monitor	\N	\N	2019-08-22	24	0	0	2019-08-22 13:06:13.853612+05:45	2019-08-22 14:11:54.408001+05:45	{}	15	2
-133	HP 15" LCD Monitor	\N	\N	2019-08-22	1	0	0	2019-08-22 13:06:44.866126+05:45	2019-08-22 14:11:54.413493+05:45	{}	15	2
+COPY public.inventory_networkswitch (id, name, model, no_of_ports, cost, status, created, last_modified, room_id, date_of_acquire, "no_of_SFP_ports", serial_no) FROM stdin;
+\.
+
+
+--
+-- Data for Name: inventory_printer; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.inventory_printer (id, name, model, cost, status, created, last_modified, room_id, date_of_acquire, ip_address, serial_no) FROM stdin;
 \.
 
 
@@ -940,60 +751,23 @@ COPY public.inventory_item (id, name, model, cost_per_item, date_of_acquire, wor
 -- Data for Name: inventory_room; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.inventory_room (id, room_no, room_name, floor_id) FROM stdin;
-1	1	Basic Lab -1	1
-2	2	Advance Computer Lab	1
-4	4	Basic Lab -2	1
-5	5	Project Lab	1
-6	6	DBMS Lab	1
-7	7	General Computer Lab	1
-80	0	Store	1
-3	3	Electronic & Communication Lab	1
+COPY public.inventory_room (id, floor) FROM stdin;
+1	1
+2	2
+3	3
+4	2
 \.
 
 
 --
--- Data for Name: inventory_subitem; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: inventory_roomhasadditionalitem; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.inventory_subitem (id, name, model, cost_per_item, working, in_maintenance, out_of_order, item_id) FROM stdin;
-2	Superhet Receiver	ED 2960B	\N	6	0	0	62
-3	Double Sideband	ED 2960C	\N	6	0	0	62
-4	Single Sideband	ED 2960D	\N	6	0	0	62
-5	Sample Hold and Multiplex	ED 2960 E	\N	6	0	0	62
-6	Pulse Code Modulator	ED 2960F	\N	6	0	0	62
-7	Delta Modulator	ED 2960G	\N	6	0	0	62
-25	73551 Handset with Cradle Content	\N	\N	1	0	0	110
-26	73553 Pulse Dialer Push Button	\N	\N	1	0	0	110
-27	73580 Subscriber Matching Unit	\N	\N	1	0	0	110
-28	73554 Dialer Push Button	\N	\N	1	0	0	110
-29	72689 Power Supply 28v 12v	\N	\N	1	0	0	110
-30	73581 Multi Frequency Receiver	\N	\N	1	0	0	110
-31	73582 Mux and Demux	\N	\N	1	0	0	110
-32	73583 Switching System	\N	\N	1	0	0	110
-33	73586 Control Unit	\N	\N	1	0	0	110
-34	Data Source	ED 2970 A	\N	6	0	0	111
-35	Data Format	ED 2970 B	\N	6	0	0	111
-36	Double Balanced Modulators	ED 2970 C	\N	6	0	0	111
-37	Carrier Phase Shifter	ED 2970 D	\N	6	0	0	111
-38	VCO	ED 2970 E	\N	6	0	0	111
-39	Data Clock Regenerator	ED 2970 F	\N	6	0	0	111
-40	Data Recovery	ED 2970 G	\N	6	0	0	111
-41	Data Recovery	ED 2970 H	\N	6	0	0	111
-42	Low Pass Filter	ED 2970 J	\N	6	0	0	111
-43	Audio Module	ED 2970 K	\N	6	0	0	111
-44	Tuned Circuit	ED 2970 L	\N	6	0	0	111
-45	Power Supply	ED 2970 M	\N	6	0	0	111
-46	Signal Source	ED 2950 A	\N	6	0	0	112
-47	Amplifier	ED 2950 B	\N	6	0	0	112
-48	Detector	ED 2950 C	\N	6	0	0	112
-49	Balanced Modulator	ED 2950 D	\N	6	0	0	112
-50	Active Filter	ED 2950 E	\N	6	0	0	112
-51	Passive Filter & Diode Bridge	ED 2950 F	\N	6	0	0	112
-52	Tuned Circuit	ED 2950 H	\N	6	0	0	112
-53	Crystal Unit	ED 2950 J	\N	6	0	0	112
-54	Aerial Unit	ED 2950 K	\N	6	0	0	112
-1	Waveform Generator/Analyzer	ED 2960A	\N	11	0	0	62
+COPY public.inventory_roomhasadditionalitem (id, last_modified, room_id, cost, created, date_of_acquire, model, name, serial_no, status) FROM stdin;
+1	2018-12-24 12:40:55.827683+05:45	2	\N	2019-01-17 15:18:14.252675+05:45	2019-01-17	Generic	Generic	\N	WK
+500	2019-01-17 15:20:47.570952+05:45	3	788.00	2019-01-17 15:20:47.57091+05:45	2019-01-17	Generic	Zebra	123	WK
+99999	2019-01-17 15:21:05.087151+05:45	2	123213.00	2019-01-17 15:21:05.087129+05:45	2019-01-17	asda	adsa	21312	OO
+7777123	2019-01-17 15:23:42.00955+05:45	1	99999999.00	2019-01-17 15:23:42.009525+05:45	2019-01-17	Generic	Zebra	32	WK
 \.
 
 
@@ -1015,7 +789,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 45, true);
 
 
 --
@@ -1043,56 +817,28 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 29, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 14, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 19, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 30, true);
 
 
 --
--- Name: inventory_categorie_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.inventory_categorie_id_seq', 21, true);
-
-
---
--- Name: inventory_floor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.inventory_floor_id_seq', 4, true);
-
-
---
--- Name: inventory_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.inventory_item_id_seq', 159, true);
-
-
---
--- Name: inventory_room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.inventory_room_id_seq', 80, true);
-
-
---
--- Name: inventory_subitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.inventory_subitem_id_seq', 61, true);
+SELECT pg_catalog.setval('public.inventory_roomhasadditionalitem_id_seq', 1, true);
 
 
 --
@@ -1232,27 +978,67 @@ ALTER TABLE ONLY public.django_session
 
 
 --
--- Name: inventory_categorie inventory_categorie_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_computer inventory_computer_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_categorie
-    ADD CONSTRAINT inventory_categorie_pkey PRIMARY KEY (id);
-
-
---
--- Name: inventory_floor inventory_floor_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_floor
-    ADD CONSTRAINT inventory_floor_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.inventory_computer
+    ADD CONSTRAINT inventory_computer_pkey PRIMARY KEY (id);
 
 
 --
--- Name: inventory_item inventory_item_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_computer inventory_computer_serial_no_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_item
-    ADD CONSTRAINT inventory_item_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.inventory_computer
+    ADD CONSTRAINT inventory_computer_serial_no_key UNIQUE (serial_no);
+
+
+--
+-- Name: inventory_laptop inventory_laptop_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_laptop
+    ADD CONSTRAINT inventory_laptop_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_laptop inventory_laptop_serial_no_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_laptop
+    ADD CONSTRAINT inventory_laptop_serial_no_key UNIQUE (serial_no);
+
+
+--
+-- Name: inventory_networkswitch inventory_networkswitch_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_networkswitch
+    ADD CONSTRAINT inventory_networkswitch_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_networkswitch inventory_networkswitch_serial_no_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_networkswitch
+    ADD CONSTRAINT inventory_networkswitch_serial_no_key UNIQUE (serial_no);
+
+
+--
+-- Name: inventory_printer inventory_printer_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_printer
+    ADD CONSTRAINT inventory_printer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_printer inventory_printer_serial_no_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_printer
+    ADD CONSTRAINT inventory_printer_serial_no_key UNIQUE (serial_no);
 
 
 --
@@ -1264,11 +1050,19 @@ ALTER TABLE ONLY public.inventory_room
 
 
 --
--- Name: inventory_subitem inventory_subitem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_roomhasadditionalitem inventory_roomhasadditionalitem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_subitem
-    ADD CONSTRAINT inventory_subitem_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.inventory_roomhasadditionalitem
+    ADD CONSTRAINT inventory_roomhasadditionalitem_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_roomhasadditionalitem inventory_roomhasadditionalitem_serial_no_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_roomhasadditionalitem
+    ADD CONSTRAINT inventory_roomhasadditionalitem_serial_no_key UNIQUE (serial_no);
 
 
 --
@@ -1363,31 +1157,143 @@ CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session U
 
 
 --
--- Name: inventory_item_category_id_44f2108d; Type: INDEX; Schema: public; Owner: -
+-- Name: inventory_computer_id_6ea7d79b_like; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX inventory_item_category_id_44f2108d ON public.inventory_item USING btree (category_id);
-
-
---
--- Name: inventory_item_room_id_80654f8c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX inventory_item_room_id_80654f8c ON public.inventory_item USING btree (room_id);
+CREATE INDEX inventory_computer_id_6ea7d79b_like ON public.inventory_computer USING btree (id varchar_pattern_ops);
 
 
 --
--- Name: inventory_room_floor_id_523d9a01; Type: INDEX; Schema: public; Owner: -
+-- Name: inventory_computer_room_id_7ff63d6d; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX inventory_room_floor_id_523d9a01 ON public.inventory_room USING btree (floor_id);
+CREATE INDEX inventory_computer_room_id_7ff63d6d ON public.inventory_computer USING btree (room_id);
 
 
 --
--- Name: inventory_subitem_item_id_53d499d3; Type: INDEX; Schema: public; Owner: -
+-- Name: inventory_computer_room_id_7ff63d6d_like; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX inventory_subitem_item_id_53d499d3 ON public.inventory_subitem USING btree (item_id);
+CREATE INDEX inventory_computer_room_id_7ff63d6d_like ON public.inventory_computer USING btree (room_id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_computer_serial_no_305faaa7_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_computer_serial_no_305faaa7_like ON public.inventory_computer USING btree (serial_no varchar_pattern_ops);
+
+
+--
+-- Name: inventory_laptop_id_c325af49_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_laptop_id_c325af49_like ON public.inventory_laptop USING btree (id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_laptop_room_id_c0da2cc3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_laptop_room_id_c0da2cc3 ON public.inventory_laptop USING btree (room_id);
+
+
+--
+-- Name: inventory_laptop_room_id_c0da2cc3_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_laptop_room_id_c0da2cc3_like ON public.inventory_laptop USING btree (room_id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_laptop_serial_no_7399b45a_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_laptop_serial_no_7399b45a_like ON public.inventory_laptop USING btree (serial_no varchar_pattern_ops);
+
+
+--
+-- Name: inventory_networkswitch_id_e6831254_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_networkswitch_id_e6831254_like ON public.inventory_networkswitch USING btree (id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_networkswitch_room_id_123e5d8a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_networkswitch_room_id_123e5d8a ON public.inventory_networkswitch USING btree (room_id);
+
+
+--
+-- Name: inventory_networkswitch_room_id_123e5d8a_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_networkswitch_room_id_123e5d8a_like ON public.inventory_networkswitch USING btree (room_id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_networkswitch_serial_no_d9aa2fa8_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_networkswitch_serial_no_d9aa2fa8_like ON public.inventory_networkswitch USING btree (serial_no varchar_pattern_ops);
+
+
+--
+-- Name: inventory_printer_id_c4313b51_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_printer_id_c4313b51_like ON public.inventory_printer USING btree (id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_printer_room_id_38119ec5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_printer_room_id_38119ec5 ON public.inventory_printer USING btree (room_id);
+
+
+--
+-- Name: inventory_printer_room_id_38119ec5_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_printer_room_id_38119ec5_like ON public.inventory_printer USING btree (room_id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_printer_serial_no_445b484b_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_printer_serial_no_445b484b_like ON public.inventory_printer USING btree (serial_no varchar_pattern_ops);
+
+
+--
+-- Name: inventory_room_id_53e40c39_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_room_id_53e40c39_like ON public.inventory_room USING btree (id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_roomhasadditionalitem_room_id_f378b506; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_roomhasadditionalitem_room_id_f378b506 ON public.inventory_roomhasadditionalitem USING btree (room_id);
+
+
+--
+-- Name: inventory_roomhasadditionalitem_room_id_f378b506_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_roomhasadditionalitem_room_id_f378b506_like ON public.inventory_roomhasadditionalitem USING btree (room_id varchar_pattern_ops);
+
+
+--
+-- Name: inventory_roomhasadditionalitem_serial_no_59a128de_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX inventory_roomhasadditionalitem_serial_no_59a128de_like ON public.inventory_roomhasadditionalitem USING btree (serial_no varchar_pattern_ops);
 
 
 --
@@ -1463,35 +1369,43 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: inventory_item inventory_item_category_id_44f2108d_fk_inventory_categorie_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_computer inventory_computer_room_id_7ff63d6d_fk_inventory_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_item
-    ADD CONSTRAINT inventory_item_category_id_44f2108d_fk_inventory_categorie_id FOREIGN KEY (category_id) REFERENCES public.inventory_categorie(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: inventory_item inventory_item_room_id_80654f8c_fk_inventory_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.inventory_item
-    ADD CONSTRAINT inventory_item_room_id_80654f8c_fk_inventory_room_id FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.inventory_computer
+    ADD CONSTRAINT inventory_computer_room_id_7ff63d6d_fk_inventory_room_id FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: inventory_room inventory_room_floor_id_523d9a01_fk_inventory_floor_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_laptop inventory_laptop_room_id_c0da2cc3_fk_inventory_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_room
-    ADD CONSTRAINT inventory_room_floor_id_523d9a01_fk_inventory_floor_id FOREIGN KEY (floor_id) REFERENCES public.inventory_floor(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.inventory_laptop
+    ADD CONSTRAINT inventory_laptop_room_id_c0da2cc3_fk_inventory_room_id FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: inventory_subitem inventory_subitem_item_id_53d499d3_fk_inventory_item_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: inventory_networkswitch inventory_networkswitch_room_id_123e5d8a_fk_inventory_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.inventory_subitem
-    ADD CONSTRAINT inventory_subitem_item_id_53d499d3_fk_inventory_item_id FOREIGN KEY (item_id) REFERENCES public.inventory_item(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.inventory_networkswitch
+    ADD CONSTRAINT inventory_networkswitch_room_id_123e5d8a_fk_inventory_room_id FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: inventory_printer inventory_printer_room_id_38119ec5_fk_inventory_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_printer
+    ADD CONSTRAINT inventory_printer_room_id_38119ec5_fk_inventory_room_id FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: inventory_roomhasadditionalitem inventory_roomhasadd_room_id_f378b506_fk_inventory; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_roomhasadditionalitem
+    ADD CONSTRAINT inventory_roomhasadd_room_id_f378b506_fk_inventory FOREIGN KEY (room_id) REFERENCES public.inventory_room(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
