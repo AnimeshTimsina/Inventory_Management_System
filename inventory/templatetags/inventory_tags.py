@@ -30,42 +30,49 @@ from ..models import Item,Categorie,Room
 def categoryList():
     list = []
     categories = Categorie.objects.all()
-    for c in categories:
-        list.append(c.category_name)
-    return mark_safe(list)
+    if categories.exists():
+        for c in categories:
+            list.append(c.category_name)
+        return mark_safe(list)
+    else:
+        return list
 
 @register.simple_tag
 def roomList():
     list = []
     rooms = Room.objects.all()
-    for r in rooms:
-        list.append(r.room_name)
-    
+    if rooms.exists():
+        for r in rooms:
+            list.append(r.room_name)
     return mark_safe(list)
 
 @register.simple_tag
 def itemNumberBasedOnCategory():
     list = []
     categories = Categorie.objects.all()
-    for c in categories:
-       items = Item.objects.filter(category = c)
-       count = 0
-       for i in items:
-           count = count + i.working + i.out_of_order + i.in_maintenance
-       list.append(count)
-    return list
+    if categories.exists():
+        for c in categories:
+           items = Item.objects.filter(category = c)
+           count = 0
+           if items.exists():
+               for i in items:
+                   count = count + i.working + i.out_of_order + i.in_maintenance
+           list.append(count)
+    return [0]
 
 @register.simple_tag
 def itemNumberBasedOnRoom():
     list = []
     rooms = Room.objects.all()
-    for r in rooms:
-        items = Item.objects.filter(room = r)
-        count = 0
-        for i in items:
-            count = count + i.working + i.out_of_order + i.in_maintenance
-        list.append(count)
-    return list
+    if rooms.exists():
+        for r in rooms:
+            items = Item.objects.filter(room = r)
+            count = 0
+            if items.exists():
+                for i in items:
+                    count = count + i.working + i.out_of_order + i.in_maintenance
+            list.append(count)
+    return [0]
 
 
 
@@ -73,8 +80,9 @@ def itemNumberBasedOnRoom():
 def total_products_count():
     count = 0
     item = Item.objects.all()
-    for obj in item:
-        count += obj.working + obj.in_maintenance + obj.out_of_order
+    if item.exists():
+        for obj in item:
+            count += obj.working + obj.in_maintenance + obj.out_of_order
 
     return count
 
@@ -82,8 +90,9 @@ def total_products_count():
 def working_count():
     count = 0
     item = Item.objects.all()
-    for obj in item:
-        count += obj.working
+    if item.exists():
+        for obj in item:
+            count += obj.working
     return count
 
 
@@ -91,9 +100,9 @@ def working_count():
 def out_of_order_count():
     count = 0
     item = Item.objects.all()
-    for obj in item:
-        count += obj.out_of_order
-
+    if item.exists():
+        for obj in item:
+            count += obj.out_of_order
     return count
 
 
@@ -101,9 +110,9 @@ def out_of_order_count():
 def in_maintenance_count():
     count = 0
     item = Item.objects.all()
-    for obj in item:
-        count += obj.in_maintenance
-
+    if item.exists():
+        for obj in item:
+            count += obj.in_maintenance
     return count
 
 @register.simple_tag
@@ -116,13 +125,25 @@ def total_item_type_count():
 
 @register.simple_tag
 def working_percentage():
-   return ((working_count() / total_products_count())*100)
+    try:
+        percentage = ((working_count() / total_products_count())*100)
+    except:
+        percentage = 0.0
+    return percentage
 
 
 @register.simple_tag
 def out_of_order_percentage():
-   return ((out_of_order_count() / total_products_count())*100)
+    try:
+        percentage = ((out_of_order_count() / total_products_count())*100)
+    except:
+        percentage = 0.0
+    return percentage
 
 @register.simple_tag
 def in_maintenance_percentage():
-   return ((in_maintenance_count() / total_products_count())*100)
+    try:
+        percentage = ((in_maintenance_count() / total_products_count())*100)
+    except:
+        percentage = 0.0
+    return percentage
