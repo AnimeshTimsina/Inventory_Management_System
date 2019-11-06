@@ -2,11 +2,11 @@
 
 Inventory items can divided into categories having category-specific properties which can be custom-added by the user.
 
-This is basicalyy a CRUD system for Floor, Room, Category, Item and User.
+This is basicaly a CRUD system for Floor, Room, Category, Item and User.
 
-It also has an advanced filter page with intuitive tables and add/edit/delete facility from the table itself
+It also has an advanced filter page with intuitive tables and add/edit/delete facility from the table itself.
 
-CSV files are also available for download
+CSV files are also available for download.
 
 ### Usage
 
